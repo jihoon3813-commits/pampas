@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <!-- Premium Gold Gradient matching the attached reference image -->
+    <!-- Premium Gold Gradient matching the reference image -->
     <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FCD34D"/>
       <stop offset="30%" stop-color="#F59E0B"/>
@@ -8,6 +8,8 @@
       <stop offset="100%" stop-color="#9A3412"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" fill="#0A0F1D"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="'Playfair Display', 'Noto Serif KR', serif" font-weight="900" font-size="340" fill="url(#goldGradient)">P</text>
+  <!-- Gold Gradient Background -->
+  <rect width="512" height="512" fill="url(#goldGradient)"/>
+  <!-- Deep Navy P Symbol -->
+  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="'Playfair Display', 'Noto Serif KR', serif" font-weight="900" font-size="340" fill="#0A0F1D">P</text>
 </svg>
