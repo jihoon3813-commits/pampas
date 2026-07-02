@@ -5,39 +5,64 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Helper to save consultation data to localStorage
-  const saveConsultation = (userName, userPhone, interestBenefit, consultTime) => {
+  // Helper to save consultation data to localStorage and Convex
+  const saveConsultation = async (userName, userPhone, interestBenefit, consultTime) => {
+    const payload = {
+      userName,
+      userPhone,
+      interestBenefit,
+      consultTime,
+      date: new Date().toLocaleString()
+    };
+    
     try {
       const list = JSON.parse(localStorage.getItem('pampas_consultations') || '[]');
-      list.push({
-        id: Date.now(),
-        userName,
-        userPhone,
-        interestBenefit,
-        consultTime,
-        date: new Date().toLocaleString()
-      });
+      list.push({ ...payload, id: Date.now() });
       localStorage.setItem('pampas_consultations', JSON.stringify(list));
     } catch (e) {
-      console.error('Error saving consultation:', e);
+      console.error('Error saving consultation locally:', e);
+    }
+
+    try {
+      const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
+        || 'https://modest-gnat-340.convex.site';
+      await fetch(`${CONVEX_SITE_URL}/submitConsultation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      console.error('Error submitting consultation to Convex:', e);
     }
   };
 
-  // Helper to save 1:1 inquiry data to localStorage
-  const saveInquiry = (userName, userPhone, message) => {
+  // Helper to save 1:1 inquiry data to localStorage and Convex
+  const saveInquiry = async (userName, userPhone, message) => {
+    const payload = {
+      userName,
+      userPhone,
+      message,
+      date: new Date().toLocaleString()
+    };
+
     try {
       const list = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
-      list.push({
-        id: Date.now(),
-        userName,
-        userPhone,
-        message,
-        status: '대기중',
-        date: new Date().toLocaleString()
-      });
+      list.push({ ...payload, id: Date.now(), status: '대기중' });
       localStorage.setItem('pampas_inquiries', JSON.stringify(list));
     } catch (e) {
-      console.error('Error saving 1:1 inquiry:', e);
+      console.error('Error saving 1:1 inquiry locally:', e);
+    }
+
+    try {
+      const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
+        || 'https://modest-gnat-340.convex.site';
+      await fetch(`${CONVEX_SITE_URL}/submitInquiry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      console.error('Error submitting 1:1 inquiry to Convex:', e);
     }
   };
 

@@ -1025,6 +1025,56 @@
       
       const liveTimeClock = document.getElementById('liveTimeClock');
 
+      // Convex Integration Configuration
+      const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
+        || 'https://modest-gnat-340.convex.site';
+
+      let activeConsultations = [];
+      let activeInquiries = [];
+
+      async function fetchConsultations() {
+        try {
+          const res = await fetch(`${CONVEX_SITE_URL}/getConsultations`);
+          if (res.ok) {
+            const data = await res.json();
+            activeConsultations = data.map(item => ({
+              id: item._id,
+              userName: item.userName,
+              userPhone: item.userPhone,
+              interestBenefit: item.interestBenefit,
+              consultTime: item.consultTime,
+              status: item.status || '대기중',
+              date: item.date
+            }));
+            localStorage.setItem('pampas_consultations', JSON.stringify(activeConsultations));
+          }
+        } catch (e) {
+          console.error('Error fetching consultations from Convex, falling back to local:', e);
+          activeConsultations = JSON.parse(localStorage.getItem('pampas_consultations') || '[]');
+        }
+      }
+
+      async function fetchInquiries() {
+        try {
+          const res = await fetch(`${CONVEX_SITE_URL}/getInquiries`);
+          if (res.ok) {
+            const data = await res.json();
+            activeInquiries = data.map(item => ({
+              id: item._id,
+              userName: item.userName,
+              userPhone: item.userPhone,
+              message: item.message,
+              status: item.status || '대기중',
+              date: item.date
+            }));
+            localStorage.setItem('pampas_inquiries', JSON.stringify(activeInquiries));
+          }
+        } catch (e) {
+          console.error('Error fetching inquiries from Convex, falling back to local:', e);
+          activeInquiries = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
+        }
+      }
+
       // Initialize admin password if not set
       if (!localStorage.getItem('pampas_admin_password')) {
         localStorage.setItem('pampas_admin_password', 'admin1234');
@@ -1070,7 +1120,7 @@
         hideDashboard();
       });
 
-      function showDashboard() {
+      async function showDashboard() {
         loginWrapper.style.opacity = '0';
         setTimeout(() => {
           loginWrapper.style.display = 'none';
@@ -1078,8 +1128,7 @@
         
         sidebarNode.style.display = 'flex';
         mainConsoleNode.style.display = 'flex';
-        renderRequests();
-        switchTab('list');
+        await switchTab('list');
       }
 
       function hideDashboard() {
@@ -1094,7 +1143,7 @@
       }
 
       // Tabs handling
-      function switchTab(tab) {
+      async function switchTab(tab) {
         menuBtnList.classList.remove('active');
         menuBtnInquiry.classList.remove('active');
         menuBtnPassword.classList.remove('active');
@@ -1107,11 +1156,13 @@
           menuBtnList.classList.add('active');
           panelList.classList.add('active');
           breadcrumbCurrent.textContent = '상담신청 내역 관리';
+          await fetchConsultations();
           renderRequests();
         } else if (tab === 'inquiry') {
           menuBtnInquiry.classList.add('active');
           panelInquiry.classList.add('active');
           breadcrumbCurrent.textContent = '1:1 문의 내역 관리';
+          await fetchInquiries();
           renderInquiries();
         } else {
           menuBtnPassword.classList.add('active');
@@ -1127,7 +1178,7 @@
 
       // Render requests lists
       function renderRequests() {
-        const list = JSON.parse(localStorage.getItem('pampas_consultations') || '[]');
+        const list = activeConsultations;
         
         // Calculate and update KPIs
         kpiTotal.textContent = list.length;
@@ -1239,42 +1290,51 @@
 
         // Bind status select change listeners
         document.querySelectorAll('.status-select').forEach(select => {
-          select.addEventListener('change', (e) => {
-            const id = parseInt(e.target.getAttribute('data-id'));
+          select.addEventListener('change', async (e) => {
+            const id = e.target.getAttribute('data-id');
             const newStatus = e.target.value;
-            updateRequestStatus(id, newStatus);
+            await updateRequestStatus(id, newStatus);
           });
         });
 
         // Bind delete events
         document.querySelectorAll('.btn-icon-delete').forEach(btn => {
-          btn.addEventListener('click', (e) => {
+          btn.addEventListener('click', async (e) => {
             const btnEl = e.target.closest('.btn-icon-delete');
-            const id = parseInt(btnEl.getAttribute('data-id'));
+            const id = btnEl.getAttribute('data-id');
             if (confirm('이 상담 신청 내역을 삭제하시겠습니까?')) {
-              deleteRequest(id);
+              await deleteRequest(id);
             }
           });
         });
       }
 
       // Update status
-      function updateRequestStatus(id, newStatus) {
-        let list = JSON.parse(localStorage.getItem('pampas_consultations') || '[]');
-        list = list.map(req => {
-          if (req.id === id) {
-            req.status = newStatus;
-          }
-          return req;
-        });
-        localStorage.setItem('pampas_consultations', JSON.stringify(list));
+      async function updateRequestStatus(id, newStatus) {
+        try {
+          await fetch(`${CONVEX_SITE_URL}/updateConsultationStatus`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, status: newStatus })
+          });
+        } catch (e) {
+          console.error('Error updating status in Convex:', e);
+        }
+        await fetchConsultations();
         renderRequests();
       }
 
-      function deleteRequest(id) {
-        let list = JSON.parse(localStorage.getItem('pampas_consultations') || '[]');
-        list = list.filter(req => req.id !== id);
-        localStorage.setItem('pampas_consultations', JSON.stringify(list));
+      async function deleteRequest(id) {
+        try {
+          await fetch(`${CONVEX_SITE_URL}/deleteConsultation`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+          });
+        } catch (e) {
+          console.error('Error deleting from Convex:', e);
+        }
+        await fetchConsultations();
         renderRequests();
       }
 
@@ -1284,9 +1344,16 @@
       filterStatus.addEventListener('change', renderRequests);
 
       // Event listener: Clear all entries
-      clearAllBtn.addEventListener('click', () => {
+      clearAllBtn.addEventListener('click', async () => {
         if (confirm('정말로 전체 상담 신청 내역을 비우시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
-          localStorage.setItem('pampas_consultations', JSON.stringify([]));
+          try {
+            await fetch(`${CONVEX_SITE_URL}/clearAllConsultations`, {
+              method: 'DELETE'
+            });
+          } catch (e) {
+            console.error('Error clearing consultations in Convex:', e);
+          }
+          await fetchConsultations();
           renderRequests();
         }
       });
@@ -1295,7 +1362,7 @@
       // 1:1 Inquiries Handling
       // ==========================================
       function renderInquiries() {
-        const list = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
+        const list = activeInquiries;
         
         // Calculate and update KPIs
         kpiInquiryTotal.textContent = list.length;
@@ -1388,41 +1455,50 @@
 
         // Bind status select change listeners
         document.querySelectorAll('.inquiry-status-select').forEach(select => {
-          select.addEventListener('change', (e) => {
-            const id = parseInt(e.target.getAttribute('data-id'));
+          select.addEventListener('change', async (e) => {
+            const id = e.target.getAttribute('data-id');
             const newStatus = e.target.value;
-            updateInquiryStatus(id, newStatus);
+            await updateInquiryStatus(id, newStatus);
           });
         });
 
         // Bind delete events
         document.querySelectorAll('.btn-icon-delete-inquiry').forEach(btn => {
-          btn.addEventListener('click', (e) => {
+          btn.addEventListener('click', async (e) => {
             const btnEl = e.target.closest('.btn-icon-delete-inquiry');
-            const id = parseInt(btnEl.getAttribute('data-id'));
+            const id = btnEl.getAttribute('data-id');
             if (confirm('이 1:1 문의 내역을 삭제하시겠습니까?')) {
-              deleteInquiry(id);
+              await deleteInquiry(id);
             }
           });
         });
       }
 
-      function updateInquiryStatus(id, newStatus) {
-        let list = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
-        list = list.map(req => {
-          if (req.id === id) {
-            req.status = newStatus;
-          }
-          return req;
-        });
-        localStorage.setItem('pampas_inquiries', JSON.stringify(list));
+      async function updateInquiryStatus(id, newStatus) {
+        try {
+          await fetch(`${CONVEX_SITE_URL}/updateInquiryStatus`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, status: newStatus })
+          });
+        } catch (e) {
+          console.error('Error updating status in Convex:', e);
+        }
+        await fetchInquiries();
         renderInquiries();
       }
 
-      function deleteInquiry(id) {
-        let list = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
-        list = list.filter(req => req.id !== id);
-        localStorage.setItem('pampas_inquiries', JSON.stringify(list));
+      async function deleteInquiry(id) {
+        try {
+          await fetch(`${CONVEX_SITE_URL}/deleteInquiry`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+          });
+        } catch (e) {
+          console.error('Error deleting from Convex:', e);
+        }
+        await fetchInquiries();
         renderInquiries();
       }
 
@@ -1431,9 +1507,16 @@
       filterInquiryStatus.addEventListener('change', renderInquiries);
 
       // Event listener: Clear all inquiries
-      clearAllInquiriesBtn.addEventListener('click', () => {
+      clearAllInquiriesBtn.addEventListener('click', async () => {
         if (confirm('정말로 전체 1:1 문의 내역을 비우시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
-          localStorage.setItem('pampas_inquiries', JSON.stringify([]));
+          try {
+            await fetch(`${CONVEX_SITE_URL}/clearAllInquiries`, {
+              method: 'DELETE'
+            });
+          } catch (e) {
+            console.error('Error clearing inquiries in Convex:', e);
+          }
+          await fetchInquiries();
           renderInquiries();
         }
       });
