@@ -374,7 +374,7 @@ h1, h2, h3, h4 {
 /* Hero Section (Dark Blue Amex Platinum Style) */
 .hero-section {
   background-color: var(--bg-dark-blue);
-  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.45) 50%, rgba(0, 0, 0, 0.1) 100%), url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1782996332/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_09_44_17_l9wtm1.png');
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.45) 50%, rgba(0, 0, 0, 0.1) 100%), url('https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_1920/v1782996332/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_09_44_17_l9wtm1.png');
   background-size: cover;
   background-position: center;
   color: var(--color-text-light);
@@ -390,7 +390,7 @@ h1, h2, h3, h4 {
 
 @media (max-width: 768px) {
   .hero-section {
-    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0.8) 100%), url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1783002881/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_34_21_c8y8db.png');
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0.8) 100%), url('https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_800/v1783002881/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_34_21_c8y8db.png');
     background-position: center;
   }
 }
@@ -868,19 +868,19 @@ h1, h2, h3, h4 {
   }
   
   #bg-travel {
-    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1783003779/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_22_1_s1bdsw.png') !important;
+    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_800/v1783003779/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_22_1_s1bdsw.png') !important;
   }
   #bg-wedding {
-    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1783003779/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_22_2_ej1nwt.png') !important;
+    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_800/v1783003779/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_22_2_ej1nwt.png') !important;
   }
   #bg-parent {
-    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1783003779/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_22_3_ku6rz5.png') !important;
+    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_800/v1783003779/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_22_3_ku6rz5.png') !important;
   }
   #bg-pet {
-    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1783003780/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_23_4_wbd4ti.png') !important;
+    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_800/v1783003780/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_23_4_wbd4ti.png') !important;
   }
   #bg-support {
-    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1783003780/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_23_5_qt540b.png') !important;
+    background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_800/v1783003780/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_49_23_5_qt540b.png') !important;
   }
 }
 
