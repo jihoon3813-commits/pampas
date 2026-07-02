@@ -1,4 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#0F172A"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="'Playfair Display', 'Noto Serif KR', serif" font-weight="900" font-size="340" fill="#EA580C">L</text>
+  <defs>
+    <!-- Premium Gold Gradient matching the attached reference image -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="30%" stop-color="#F59E0B"/>
+      <stop offset="70%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#9A3412"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="#0A0F1D"/>
+  <text x="49%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="'Playfair Display', 'Noto Serif KR', serif" font-weight="900" font-size="220" letter-spacing="-0.06em" fill="url(#goldGradient)">PL</text>
 </svg>
