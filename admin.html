@@ -677,6 +677,132 @@
     .tab-panel.active {
       display: block;
     }
+
+    /* Mobile Responsive Dashboard Optimization (모바일 향 페이지 구성) */
+    @media (max-width: 991px) {
+      .admin-sidebar {
+        width: 100% !important;
+        min-height: auto !important;
+        position: relative !important;
+        flex-direction: column !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      }
+
+      .sidebar-brand {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        padding: 15px 20px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+      }
+      
+      .mobile-logout-btn {
+        display: block !important;
+      }
+      
+      .sidebar-profile {
+        display: none !important;
+      }
+
+      .sidebar-menu {
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        padding: 8px 15px !important;
+        gap: 6px !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+      }
+
+      .sidebar-menu::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      .menu-item {
+        width: auto !important;
+        padding: 10px 14px !important;
+        font-size: 12.5px !important;
+        border-left: none !important;
+        border-bottom: 3px solid transparent !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        white-space: nowrap !important;
+      }
+
+      .menu-item.active {
+        border-left-color: transparent !important;
+        border-bottom-color: var(--color-gold) !important;
+        background-color: transparent !important;
+      }
+
+      .sidebar-footer {
+        display: none !important;
+      }
+
+      .admin-main {
+        margin-left: 0 !important;
+      }
+
+      .admin-navbar {
+        display: none !important;
+      }
+
+      .admin-content {
+        padding: 15px !important;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        margin-bottom: 20px !important;
+      }
+
+      .kpi-card {
+        padding: 12px 15px !important;
+      }
+
+      .kpi-val {
+        font-size: 20px !important;
+      }
+
+      .kpi-icon {
+        display: none !important;
+      }
+
+      .filter-bar {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+
+      .search-input-wrapper {
+        max-width: none !important;
+        width: 100% !important;
+      }
+
+      .filter-select {
+        max-width: none !important;
+        width: 100% !important;
+      }
+
+      .card-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+      }
+
+      .clear-all-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 8px 0 !important;
+        border: 1px solid rgba(239, 68, 68, 0.2) !important;
+      }
+
+      .login-box {
+        max-width: 90% !important;
+        padding: 35px 20px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -715,10 +841,11 @@
   <!-- ========================================== -->
   <div class="admin-sidebar" id="sidebarNode" style="display: none;">
     <!-- Logo -->
-    <div class="sidebar-brand">
+    <div class="sidebar-brand" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
       <a href="index.html" class="sidebar-logo">
         PAMPAS <span>LIFE</span>
       </a>
+      <button class="mobile-logout-btn" id="mobileLogoutBtn" style="display: none; background: none; border: 1px solid rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.7); font-size: 11px; padding: 4px 10px; font-weight: 600; cursor: pointer; outline: none; font-family: inherit;">LOGOUT</button>
     </div>
     
     <!-- Profile -->
@@ -1115,10 +1242,16 @@
       });
 
       // Event Handler: Logout
-      logoutBtn.addEventListener('click', () => {
+      const handleLogout = () => {
         sessionStorage.removeItem('pampas_admin_logged_in');
         hideDashboard();
-      });
+      };
+      logoutBtn.addEventListener('click', handleLogout);
+      
+      const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+      if (mobileLogoutBtn) {
+        mobileLogoutBtn.addEventListener('click', handleLogout);
+      }
 
       async function showDashboard() {
         loginWrapper.style.opacity = '0';

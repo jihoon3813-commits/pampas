@@ -1657,6 +1657,14 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 768px) {
+  .site-footer {
+    padding: 60px 0 120px !important;
+  }
+  .footer-copyright-row {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 15px !important;
+  }
   .footer-biz-info {
     flex-direction: column;
     gap: 8px;
