@@ -736,6 +736,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
         상담신청 내역 관리
       </button>
+      <button class="menu-item" id="menuBtnInquiry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        1:1 문의 내역 관리
+      </button>
       <button class="menu-item" id="menuBtnPassword">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         관리자 비밀번호 설정
@@ -861,7 +865,93 @@
         </div>
       </div>
 
-      <!-- Panel 2: Password Settings Panel -->
+      <!-- Panel 2: 1:1 Inquiry List Panel -->
+      <div class="tab-panel" id="panelInquiry">
+        <div class="content-header">
+          <h2 class="content-title">1:1 문의 내역 관리</h2>
+          <p class="content-subtitle">홈페이지 팝업문의 양식을 통해 유입된 고객의 1:1 상담요청을 관리합니다.</p>
+        </div>
+
+        <!-- KPI Card Summary Grid for Inquiries -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-info">
+              <h5>누적 1:1 문의</h5>
+              <p class="kpi-val" id="kpiInquiryTotal">0</p>
+            </div>
+            <div class="kpi-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+          </div>
+          <div class="kpi-card accent">
+            <div class="kpi-info">
+              <h5>답변 대기중</h5>
+              <p class="kpi-val" id="kpiInquiryPending">0</p>
+            </div>
+            <div class="kpi-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+          </div>
+          <div class="kpi-card gold">
+            <div class="kpi-info">
+              <h5>답변 완료</h5>
+              <p class="kpi-val" id="kpiInquiryCompleted">0</p>
+            </div>
+            <div class="kpi-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Card for Inquiries -->
+        <div class="section-card">
+          <div class="card-header">
+            <h4 class="card-title">1:1 문의 접수 리스트</h4>
+            <button class="clear-all-btn" id="clearAllInquiriesBtn" style="color: #EF4444;">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              전체 내역 비우기
+            </button>
+          </div>
+          
+          <div class="card-body">
+            <!-- Search & Filters -->
+            <div class="filter-bar">
+              <div class="search-input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="inquirySearchInput" class="search-input" placeholder="이름 또는 연락처 검색">
+              </div>
+              <select id="filterInquiryStatus" class="filter-select">
+                <option value="all">전체 상태</option>
+                <option value="대기중">대기중</option>
+                <option value="처리중">처리중</option>
+                <option value="답변완료">답변완료</option>
+                <option value="접수취소">접수취소</option>
+              </select>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive">
+              <table class="data-table" id="inquiriesTable">
+                <thead>
+                  <tr>
+                    <th style="width: 12%;">접수일시</th>
+                    <th style="width: 12%;">문의자</th>
+                    <th style="width: 16%;">연락처</th>
+                    <th style="width: 38%;">문의 내용</th>
+                    <th style="width: 17%;">처리 상태</th>
+                    <th style="width: 5%;">작업</th>
+                  </tr>
+                </thead>
+                <tbody id="inquiryTableBody">
+                  <!-- Injected via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: Password Settings Panel -->
       <div class="tab-panel" id="panelPassword">
         <div class="content-header">
           <h2 class="content-title">비밀번호 변경 및 계정 설정</h2>
@@ -905,8 +995,10 @@
       const logoutBtn = document.getElementById('logoutBtn');
       
       const menuBtnList = document.getElementById('menuBtnList');
+      const menuBtnInquiry = document.getElementById('menuBtnInquiry');
       const menuBtnPassword = document.getElementById('menuBtnPassword');
       const panelList = document.getElementById('panelList');
+      const panelInquiry = document.getElementById('panelInquiry');
       const panelPassword = document.getElementById('panelPassword');
       const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
       
@@ -920,6 +1012,17 @@
       const kpiTotal = document.getElementById('kpiTotal');
       const kpiPending = document.getElementById('kpiPending');
       const kpiJoined = document.getElementById('kpiJoined');
+      
+      // Inquiry elements
+      const inquiryTableBody = document.getElementById('inquiryTableBody');
+      const inquirySearchInput = document.getElementById('inquirySearchInput');
+      const filterInquiryStatus = document.getElementById('filterInquiryStatus');
+      const clearAllInquiriesBtn = document.getElementById('clearAllInquiriesBtn');
+      
+      const kpiInquiryTotal = document.getElementById('kpiInquiryTotal');
+      const kpiInquiryPending = document.getElementById('kpiInquiryPending');
+      const kpiInquiryCompleted = document.getElementById('kpiInquiryCompleted');
+      
       const liveTimeClock = document.getElementById('liveTimeClock');
 
       // Initialize admin password if not set
@@ -992,24 +1095,34 @@
 
       // Tabs handling
       function switchTab(tab) {
+        menuBtnList.classList.remove('active');
+        menuBtnInquiry.classList.remove('active');
+        menuBtnPassword.classList.remove('active');
+        
+        panelList.classList.remove('active');
+        panelInquiry.classList.remove('active');
+        panelPassword.classList.remove('active');
+        
         if (tab === 'list') {
           menuBtnList.classList.add('active');
-          menuBtnPassword.classList.remove('active');
           panelList.classList.add('active');
-          panelPassword.classList.remove('active');
           breadcrumbCurrent.textContent = '상담신청 내역 관리';
           renderRequests();
+        } else if (tab === 'inquiry') {
+          menuBtnInquiry.classList.add('active');
+          panelInquiry.classList.add('active');
+          breadcrumbCurrent.textContent = '1:1 문의 내역 관리';
+          renderInquiries();
         } else {
           menuBtnPassword.classList.add('active');
-          menuBtnList.classList.remove('active');
           panelPassword.classList.add('active');
-          panelList.classList.remove('active');
           breadcrumbCurrent.textContent = '관리자 비밀번호 설정';
           pwdChangeForm.reset();
         }
       }
 
       menuBtnList.addEventListener('click', () => switchTab('list'));
+      menuBtnInquiry.addEventListener('click', () => switchTab('inquiry'));
       menuBtnPassword.addEventListener('click', () => switchTab('password'));
 
       // Render requests lists
@@ -1175,6 +1288,153 @@
         if (confirm('정말로 전체 상담 신청 내역을 비우시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
           localStorage.setItem('pampas_consultations', JSON.stringify([]));
           renderRequests();
+        }
+      });
+
+      // ==========================================
+      // 1:1 Inquiries Handling
+      // ==========================================
+      function renderInquiries() {
+        const list = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
+        
+        // Calculate and update KPIs
+        kpiInquiryTotal.textContent = list.length;
+        const pendingCount = list.filter(r => !r.status || r.status === '대기중').length;
+        const completedCount = list.filter(r => r.status === '답변완료').length;
+        kpiInquiryPending.textContent = pendingCount;
+        kpiInquiryCompleted.textContent = completedCount;
+
+        // Apply filters
+        const q = inquirySearchInput.value.toLowerCase().trim();
+        const statusVal = filterInquiryStatus.value;
+
+        const filtered = list.filter(item => {
+          // Query Match (Name or Phone)
+          const nameMatch = item.userName && item.userName.toLowerCase().includes(q);
+          const phoneMatch = item.userPhone && item.userPhone.includes(q);
+          const queryMatches = q === '' || nameMatch || phoneMatch;
+
+          // Status Match
+          let statusMatches = true;
+          if (statusVal !== 'all') {
+            const currentItemStatus = item.status || '대기중';
+            statusMatches = currentItemStatus === statusVal;
+          }
+
+          return queryMatches && statusMatches;
+        });
+
+        inquiryTableBody.innerHTML = '';
+
+        if (filtered.length === 0) {
+          inquiryTableBody.innerHTML = `
+            <tr>
+              <td colspan="6">
+                <div class="empty-state">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                  <p class="empty-state-title">검색 및 조건에 일치하는 문의 내역이 없습니다.</p>
+                  <p class="empty-state-desc">검색어나 선택한 필터 설정을 확인해보세요.</p>
+                </div>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        // Status Colors Helper for Inquiries
+        const getInquiryStatusColor = (status) => {
+          switch(status) {
+            case '처리중': return { bg: '#DBEAFE', fg: '#2563EB', border: '#BFDBFE' };
+            case '답변완료': return { bg: '#D1FAE5', fg: '#059669', border: '#A7F3D0' };
+            case '접수취소': return { bg: '#FEE2E2', fg: '#DC2626', border: '#FECACA' };
+            case '대기중':
+            default:
+              return { bg: '#FEF3C7', fg: '#D97706', border: '#FDE68A' };
+          }
+        };
+
+        // Render rows (reverse order - newest first)
+        [...filtered].reverse().forEach(req => {
+          const tr = document.createElement('tr');
+          const reqTime = req.date ? req.date.split(',')[0] : 'N/A';
+          const currentStatus = req.status || '대기중';
+          const colors = getInquiryStatusColor(currentStatus);
+
+          tr.innerHTML = `
+            <td style="color: var(--text-muted); font-size:12.5px;">${escapeHtml(reqTime)}</td>
+            <td style="font-weight: 600; color: var(--text-dark);">${escapeHtml(req.userName)}</td>
+            <td>${escapeHtml(req.userPhone)}</td>
+            <td style="text-align: left; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${escapeHtml(req.message)}">
+              ${escapeHtml(req.message)}
+            </td>
+            <td>
+              <select class="inquiry-status-select" data-id="${req.id}" style="background-color: ${colors.bg}; color: ${colors.fg}; border: 1px solid ${colors.border}; padding: 6px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer; outline: none; font-family: inherit; width: 110px;">
+                <option value="대기중" ${currentStatus === '대기중' ? 'selected' : ''}>대기중</option>
+                <option value="처리중" ${currentStatus === '처리중' ? 'selected' : ''}>처리중</option>
+                <option value="답변완료" ${currentStatus === '답변완료' ? 'selected' : ''}>답변완료</option>
+                <option value="접수취소" ${currentStatus === '접수취소' ? 'selected' : ''}>접수취소</option>
+              </select>
+            </td>
+            <td>
+              <div class="action-btn-group">
+                <button class="btn-icon-delete-inquiry" data-id="${req.id}" title="내역 삭제" style="background: none; border: none; color: #EF4444; cursor: pointer; padding: 6px; display: inline-flex; align-items: center; justify-content: center; transition: background-color 0.2s;">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+              </div>
+            </td>
+          `;
+          inquiryTableBody.appendChild(tr);
+        });
+
+        // Bind status select change listeners
+        document.querySelectorAll('.inquiry-status-select').forEach(select => {
+          select.addEventListener('change', (e) => {
+            const id = parseInt(e.target.getAttribute('data-id'));
+            const newStatus = e.target.value;
+            updateInquiryStatus(id, newStatus);
+          });
+        });
+
+        // Bind delete events
+        document.querySelectorAll('.btn-icon-delete-inquiry').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const btnEl = e.target.closest('.btn-icon-delete-inquiry');
+            const id = parseInt(btnEl.getAttribute('data-id'));
+            if (confirm('이 1:1 문의 내역을 삭제하시겠습니까?')) {
+              deleteInquiry(id);
+            }
+          });
+        });
+      }
+
+      function updateInquiryStatus(id, newStatus) {
+        let list = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
+        list = list.map(req => {
+          if (req.id === id) {
+            req.status = newStatus;
+          }
+          return req;
+        });
+        localStorage.setItem('pampas_inquiries', JSON.stringify(list));
+        renderInquiries();
+      }
+
+      function deleteInquiry(id) {
+        let list = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
+        list = list.filter(req => req.id !== id);
+        localStorage.setItem('pampas_inquiries', JSON.stringify(list));
+        renderInquiries();
+      }
+
+      // Event listener: Inquiry Search and Filters
+      inquirySearchInput.addEventListener('input', renderInquiries);
+      filterInquiryStatus.addEventListener('change', renderInquiries);
+
+      // Event listener: Clear all inquiries
+      clearAllInquiriesBtn.addEventListener('click', () => {
+        if (confirm('정말로 전체 1:1 문의 내역을 비우시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
+          localStorage.setItem('pampas_inquiries', JSON.stringify([]));
+          renderInquiries();
         }
       });
 

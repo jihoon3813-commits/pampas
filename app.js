@@ -23,6 +23,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Helper to save 1:1 inquiry data to localStorage
+  const saveInquiry = (userName, userPhone, message) => {
+    try {
+      const list = JSON.parse(localStorage.getItem('pampas_inquiries') || '[]');
+      list.push({
+        id: Date.now(),
+        userName,
+        userPhone,
+        message,
+        status: '대기중',
+        date: new Date().toLocaleString()
+      });
+      localStorage.setItem('pampas_inquiries', JSON.stringify(list));
+    } catch (e) {
+      console.error('Error saving 1:1 inquiry:', e);
+    }
+  };
+
   // Helper to escape HTML characters
   const escapeHtml = (text) => {
     if (!text) return '';
@@ -419,6 +437,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // Save 1:1 inquiry to localStorage
+      saveInquiry(userName, userPhone, message);
+
       const detailsHtml = `
         <div style="margin-bottom: 12px; font-weight: 600; color: #0F172A; font-size: 14px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">1:1 문의가 정상적으로 접수되었습니다.</div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>문의자</span><span style="font-weight: 600; color: #0F172A;">${escapeHtml(userName)}님</span></div>
@@ -451,5 +472,78 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // ==========================================
+  // 10. Scroll to Middle Plan Card on Mobile
+  // ==========================================
+  const scrollToMiddlePlan = () => {
+    const plansGrid = document.querySelector('.plans-grid');
+    if (plansGrid && window.innerWidth <= 768) {
+      const cards = plansGrid.querySelectorAll('.plan-card');
+      if (cards.length >= 2) {
+        const middleCard = cards[1]; // Family Life card (Recommended)
+        const offsetLeft = middleCard.offsetLeft || 0;
+        const cardWidth = middleCard.offsetWidth || (plansGrid.offsetWidth * 0.82);
+        const scrollPosition = offsetLeft - (plansGrid.offsetWidth - cardWidth) / 2;
+        plansGrid.scrollTo({
+          left: scrollPosition,
+          behavior: 'auto'
+        });
+      }
+    }
+  };
+
+  const plansGrid = document.querySelector('.plans-grid');
+  const indicatorDots = document.querySelectorAll('.indicator-dot');
+
+  if (plansGrid && indicatorDots.length > 0) {
+    // Listen to scroll to update active dot reactively
+    plansGrid.addEventListener('scroll', () => {
+      const scrollLeft = plansGrid.scrollLeft;
+      const gridWidth = plansGrid.offsetWidth;
+      const cards = plansGrid.querySelectorAll('.plan-card');
+      if (cards.length > 0) {
+        let minDiff = Infinity;
+        let activeIdx = 0;
+        cards.forEach((card, idx) => {
+          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+          const viewportCenter = scrollLeft + gridWidth / 2;
+          const diff = Math.abs(cardCenter - viewportCenter);
+          if (diff < minDiff) {
+            minDiff = diff;
+            activeIdx = idx;
+          }
+        });
+        
+        indicatorDots.forEach((dot, idx) => {
+          if (idx === activeIdx) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+    });
+
+    // Make dots clickable for smooth navigation
+    indicatorDots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        const cards = plansGrid.querySelectorAll('.plan-card');
+        if (cards[idx]) {
+          const scrollPosition = cards[idx].offsetLeft - (plansGrid.offsetWidth - cards[idx].offsetWidth) / 2;
+          plansGrid.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(scrollToMiddlePlan, 150);
+  });
+
+  window.addEventListener('resize', scrollToMiddlePlan);
 
 });
