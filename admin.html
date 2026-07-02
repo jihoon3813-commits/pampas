@@ -802,6 +802,81 @@
         max-width: 90% !important;
         padding: 35px 20px !important;
       }
+
+      /* Convert wide tables to beautiful mobile-friendly vertical cards */
+      .data-table thead {
+        display: none !important;
+      }
+      
+      .data-table, 
+      .data-table tbody, 
+      .data-table tr, 
+      .data-table td {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box;
+      }
+      
+      .data-table tr {
+        background-color: #FFF !important;
+        border: 1px solid var(--border-color) !important;
+        margin-bottom: 20px !important;
+        padding: 16px !important;
+        box-shadow: 0 4px 6px rgba(15, 23, 42, 0.03) !important;
+        position: relative;
+        text-align: left !important;
+      }
+      
+      .data-table td {
+        padding: 10px 0 !important;
+        border-bottom: 1px solid #F1F5F9 !important;
+        font-size: 13px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        min-height: 44px;
+        white-space: normal !important;
+        max-width: none !important;
+        text-align: right !important;
+      }
+      
+      .data-table td:last-child {
+        border-bottom: none !important;
+        justify-content: flex-end !important;
+        gap: 10px;
+        padding-top: 12px !important;
+        padding-bottom: 0 !important;
+      }
+      
+      /* Pseudo-labels for Consultations Table */
+      #requestsTable td:nth-of-type(1)::before { content: "접수일시"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; text-transform: uppercase; }
+      #requestsTable td:nth-of-type(2)::before { content: "신청자"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #requestsTable td:nth-of-type(3)::before { content: "연락처"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #requestsTable td:nth-of-type(4)::before { content: "신청 혜택"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #requestsTable td:nth-of-type(5)::before { content: "희망 시간"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #requestsTable td:nth-of-type(6)::before { content: "상태"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #requestsTable td:nth-of-type(7)::before { content: "작업"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+
+      /* Pseudo-labels for Inquiries Table */
+      #inquiriesTable td:nth-of-type(1)::before { content: "접수일시"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #inquiriesTable td:nth-of-type(2)::before { content: "문의자"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #inquiriesTable td:nth-of-type(3)::before { content: "연락처"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #inquiriesTable td:nth-of-type(4)::before { content: "문의 내용"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #inquiriesTable td:nth-of-type(5)::before { content: "처리 상태"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      #inquiriesTable td:nth-of-type(6)::before { content: "작업"; font-weight: 700; color: var(--text-muted); font-size: 12px; margin-right: 15px; }
+      
+      .status-select, .inquiry-status-select {
+        width: 140px !important;
+        margin: 0 !important;
+        padding: 8px 12px !important;
+        height: auto !important;
+      }
+      
+      .data-table td > span,
+      .data-table td > select,
+      .data-table td > div {
+        text-align: right;
+      }
     }
   </style>
 </head>
