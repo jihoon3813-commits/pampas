@@ -1111,8 +1111,8 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+  <script type="module">
+    const initAdmin = () => {
       // Elements
       const loginWrapper = document.getElementById('loginWrapper');
       const sidebarNode = document.getElementById('sidebarNode');
@@ -1692,7 +1692,13 @@
           .replace(/"/g, "&quot;")
           .replace(/'/g, "&#039;");
       }
-    });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAdmin);
+    } else {
+      initAdmin();
+    }
   </script>
 </body>
 </html>
