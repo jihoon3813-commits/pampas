@@ -249,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const consultModal = document.getElementById('consultModal');
   const inquiryModal = document.getElementById('inquiryModal');
+  const serviceDetailModal = document.getElementById('serviceDetailModal');
   
   const openConsultBtns = document.querySelectorAll('.open-consult-modal');
   const openInquiryBtn = document.getElementById('open1to1Modal');
