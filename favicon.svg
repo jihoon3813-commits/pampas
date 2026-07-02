@@ -9,5 +9,5 @@
     </linearGradient>
   </defs>
   <rect width="512" height="512" fill="#0A0F1D"/>
-  <text x="49%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="'Playfair Display', 'Noto Serif KR', serif" font-weight="900" font-size="220" letter-spacing="-0.06em" fill="url(#goldGradient)">PL</text>
+  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="'Playfair Display', 'Noto Serif KR', serif" font-weight="900" font-size="340" fill="url(#goldGradient)">P</text>
 </svg>
