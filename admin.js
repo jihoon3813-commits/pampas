@@ -138,6 +138,29 @@ const initAdmin = () => {
   if (mobileLogoutBtn) {
     mobileLogoutBtn.addEventListener('click', handleLogout);
   }
+  const mobileNavToggle = document.getElementById('mobileNavToggle');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  
+  if (mobileNavToggle && sidebarOverlay) {
+    const toggleMobileSidebar = () => {
+      sidebarNode.classList.toggle('open');
+      sidebarOverlay.classList.toggle('active');
+    };
+
+    const closeMobileSidebar = () => {
+      sidebarNode.classList.remove('open');
+      sidebarOverlay.classList.remove('active');
+    };
+
+    mobileNavToggle.addEventListener('click', toggleMobileSidebar);
+    sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+    // Also close drawer when clicking a menu item
+    document.querySelectorAll('.sidebar-menu .menu-item').forEach(item => {
+      item.addEventListener('click', closeMobileSidebar);
+    });
+  }
+
 
   async function showDashboard() {
     loginWrapper.style.opacity = '0';

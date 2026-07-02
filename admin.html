@@ -678,15 +678,43 @@
       display: block;
     }
 
-    /* Mobile Responsive Dashboard Optimization (모바일 향 페이지 구성) */
+    /* Mobile Responsive Dashboard Drawer & Header Layout */
     @media (max-width: 991px) {
+      /* Sidebar Overlay Backdrop */
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(2px);
+        z-index: 9999;
+      }
+      .sidebar-overlay.active {
+        display: block;
+      }
+
       .admin-sidebar {
-        width: 100% !important;
-        min-height: auto !important;
-        position: relative !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: -280px !important;
+        width: 280px !important;
+        height: 100vh !important;
+        z-index: 10000 !important;
+        display: flex !important;
         flex-direction: column !important;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3) !important;
+        min-height: 100vh !important;
         border-right: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-bottom: none !important;
+        background-color: var(--color-primary) !important;
+      }
+
+      .admin-sidebar.open {
+        left: 0 !important;
       }
 
       .sidebar-brand {
@@ -699,20 +727,21 @@
       }
       
       .mobile-logout-btn {
-        display: block !important;
+        display: none !important;
       }
       
       .sidebar-profile {
-        display: none !important;
+        display: flex !important;
+        padding: 20px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+        background-color: rgba(255, 255, 255, 0.01) !important;
       }
 
       .sidebar-menu {
-        flex-direction: row !important;
-        overflow-x: auto !important;
-        padding: 8px 15px !important;
-        gap: 6px !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
+        flex-direction: column !important;
+        padding: 20px 15px !important;
+        gap: 8px !important;
+        overflow-x: visible !important;
       }
 
       .sidebar-menu::-webkit-scrollbar {
@@ -720,32 +749,89 @@
       }
 
       .menu-item {
-        width: auto !important;
-        padding: 10px 14px !important;
-        font-size: 12.5px !important;
-        border-left: none !important;
-        border-bottom: 3px solid transparent !important;
-        display: inline-flex !important;
+        width: 100% !important;
+        padding: 14px 16px !important;
+        font-size: 13.5px !important;
+        border-left: 3px solid transparent !important;
+        border-bottom: none !important;
+        display: flex !important;
         align-items: center !important;
-        white-space: nowrap !important;
+        white-space: normal !important;
       }
 
       .menu-item.active {
-        border-left-color: transparent !important;
-        border-bottom-color: var(--color-gold) !important;
-        background-color: transparent !important;
+        border-left-color: var(--color-gold) !important;
+        border-bottom-color: transparent !important;
+        background-color: var(--color-primary-light) !important;
       }
 
       .sidebar-footer {
-        display: none !important;
+        display: flex !important;
+        padding: 20px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.04) !important;
+        margin-top: auto !important;
       }
 
       .admin-main {
         margin-left: 0 !important;
+        width: 100% !important;
       }
 
       .admin-navbar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 10px 15px !important;
+        height: 60px !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        background-color: #FFFFFF !important;
+      }
+
+      .mobile-nav-toggle {
+        display: inline-flex !important;
+        background: none;
+        border: none;
+        color: var(--text-dark);
+        cursor: pointer;
+        padding: 8px;
+        margin-right: 8px;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s;
+      }
+      
+      .mobile-nav-toggle:hover {
+        color: var(--color-accent);
+      }
+      
+      .navbar-breadcrumb {
+        font-size: 13px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
+      
+      .navbar-breadcrumb span:first-child {
         display: none !important;
+      }
+      
+      .navbar-breadcrumb svg:first-of-type {
+        display: none !important;
+      }
+
+      .navbar-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+      }
+
+      .nav-time {
+        display: none !important;
+      }
+
+      .btn-site-link {
+        font-size: 11.5px !important;
+        padding: 6px 12px !important;
       }
 
       .admin-content {
@@ -881,6 +967,7 @@
   </style>
 </head>
 <body>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <!-- ========================================== -->
   <!-- 1. LOGIN SCREEN -->
@@ -957,6 +1044,9 @@
   <div class="admin-main" id="mainConsoleNode" style="display: none;">
     <!-- Top Navbar -->
     <div class="admin-navbar">
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="메뉴 열기">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
       <div class="navbar-breadcrumb">
         <span>관리 콘솔</span>
         <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
