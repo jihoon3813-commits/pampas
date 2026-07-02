@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAMPAS | Premium Membership Layout (AMEX Style)</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="팜파스 프리미엄 멤버십 레이아웃 시안 (아메리칸 익스프레스 플래티넘 스타일)">
+  
+  <!-- Google Fonts & Pretendard -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Noto+Serif+KR:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Minimal Header -->
+  <header id="header" class="site-header">
+    <div class="header-container">
+      <div class="logo">
+        <a href="#hero" class="logo-link">PAMPAS <span>LIFE</span></a>
+      </div>
+      
+      <!-- Hamburger Menu for Mobile -->
+      <button class="mobile-menu-toggle" aria-label="메뉴 열기" id="menuToggle">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
+      <!-- Center Nav Links -->
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="#why" class="nav-link">멤버십 소개</a></li>
+          <li class="nav-item"><a href="#benefits" class="nav-link">혜택 안내</a></li>
+          <li class="nav-item"><a href="#scenarios" class="nav-link">라이프서비스</a></li>
+          <li class="nav-item"><a href="#plans" class="nav-link">이용가이드</a></li>
+          <li class="nav-item"><a href="#trust" class="nav-link">고객센터</a></li>
+        </ul>
+      </nav>
+      
+      <!-- Right CTA -->
+      <div class="header-cta">
+        <a href="tel:1544-8826" class="header-phone-link">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="margin-right: 6px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          1544-8826
+        </a>
+        <a href="#apply" class="btn btn-dark-filled open-consult-modal">혜택 상담하기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+    <!-- Hero Section (Dark Blue Premium AMEX Style) -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-text-side">
+          <h1 class="hero-title">
+            삶의 중요한 순간을<br>
+            <span class="text-highlight">더 품격 있게 연결하다</span>
+          </h1>
+          <p class="hero-desc">
+            여행, 웨딩, 가족케어, 펫케어, 라이프서비스까지<br>
+            하나의 멤버십으로 누리는 새로운 라이프 혜택
+          </p>
+          <div class="hero-actions">
+            <a href="#apply" class="btn btn-gold-filled">내 혜택 확인하기</a>
+            <a href="#benefits" class="btn btn-outline-white">멤버십 알아보기</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-num">10만+</span>
+              <span class="stat-label">누적 회원 수</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-num">300+</span>
+              <span class="stat-label">브랜드 제휴사</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-num">24/7</span>
+              <span class="stat-label">전문 상담 센터</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-num">5대</span>
+              <span class="stat-label">핵심 라이프케어</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hero-card-side" style="pointer-events: none;">
+          <!-- Empty container to let the full-bleed background image content remain fully visible on the right -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Membership Benefits Summary Section (Slanted Colorful Interactive Accordion Panels) -->
+    <section class="benefits-alt-section" id="benefits">
+      <div class="container-full">
+        <div class="alt-header text-center">
+          <span class="alt-subtitle">MEMBERSHIP BENEFITS</span>
+          <h2 class="alt-title">팜파스라이프 멤버십이 제공하는 다양한 혜택</h2>
+          <p class="alt-desc-text">고객님의 라이프스타일에 맞춰 여행, 웨딩, 라이프케어, 크루즈, 숙박 혜택까지 폭넓은 서비스를 제공합니다.</p>
+        </div>
+
+        <div class="alt-skew-wrapper">
+          <div class="alt-panels-container">
+            
+            <!-- Panel 1: Life Care -->
+            <div class="alt-panel panel-lifecare active">
+              <div class="panel-bg-image" style="background-image: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=600&auto=format&fit=crop');"></div>
+              <div class="panel-overlay" style="background: linear-gradient(to top, rgba(197, 102, 102, 0.9) 10%, rgba(224, 169, 109, 0.4) 100%);"></div>
+              <div class="panel-content-wrap">
+                <span class="panel-num">01</span>
+                <div class="panel-info">
+                  <span class="panel-tag">LIFE CARE</span>
+                  <h3 class="panel-title-ko">라이프케어 서비스</h3>
+                  <p class="panel-desc-detail">행사이행보증서를 기반으로 필요한 순간 전문적인 라이프케어 서비스를 지원합니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 2: Cruise -->
+            <div class="alt-panel panel-cruise">
+              <div class="panel-bg-image" style="background-image: url('https://images.unsplash.com/photo-1548574505-5e239809ee19?q=80&w=600&auto=format&fit=crop');"></div>
+              <div class="panel-overlay" style="background: linear-gradient(to top, rgba(0, 131, 176, 0.9) 10%, rgba(0, 180, 219, 0.4) 100%);"></div>
+              <div class="panel-content-wrap">
+                <span class="panel-num">02</span>
+                <div class="panel-info">
+                  <span class="panel-tag">CRUISE</span>
+                  <h3 class="panel-title-ko">크루즈 혜택</h3>
+                  <p class="panel-desc-detail">롯데관광과 함께하는 크루즈 서비스를 통해 특별한 여행 경험을 준비하실 수 있습니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 3: Wedding -->
+            <div class="alt-panel panel-wedding">
+              <div class="panel-bg-image" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop');"></div>
+              <div class="panel-overlay" style="background: linear-gradient(to top, rgba(139, 101, 8, 0.9) 10%, rgba(241, 226, 203, 0.4) 100%);"></div>
+              <div class="panel-content-wrap">
+                <span class="panel-num">03</span>
+                <div class="panel-info">
+                  <span class="panel-tag">WEDDING</span>
+                  <h3 class="panel-title-ko">웨딩 컨설팅</h3>
+                  <p class="panel-desc-detail">특별한 날을 위한 웨딩 컨설팅 서비스를 통해 품격 있는 결혼 준비를 도와드립니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 4: Travel -->
+            <div class="alt-panel panel-travel">
+              <div class="panel-bg-image" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop');"></div>
+              <div class="panel-overlay" style="background: linear-gradient(to top, rgba(20, 136, 204, 0.9) 10%, rgba(17, 224, 162, 0.4) 100%);"></div>
+              <div class="panel-content-wrap">
+                <span class="panel-num">04</span>
+                <div class="panel-info">
+                  <span class="panel-tag">TRAVEL</span>
+                  <h3 class="panel-title-ko">동남아 여행 혜택</h3>
+                  <p class="panel-desc-detail">3박 5일 동남아 무료여행 혜택으로 여유로운 휴식과 특별한 추억을 제공합니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 5: Hotel & Resort -->
+            <div class="alt-panel panel-hotel">
+              <div class="panel-bg-image" style="background-image: url('https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=600&auto=format&fit=crop');"></div>
+              <div class="panel-overlay" style="background: linear-gradient(to top, rgba(41, 128, 185, 0.9) 10%, rgba(142, 68, 173, 0.4) 100%);"></div>
+              <div class="panel-content-wrap">
+                <span class="panel-num">05</span>
+                <div class="panel-info">
+                  <span class="panel-tag">HOTEL & RESORT</span>
+                  <h3 class="panel-title-ko">국내 숙박 혜택</h3>
+                  <p class="panel-desc-detail">국내 여행, 리조트, 호텔 숙박 등 라이프스타일에 맞춘 다양한 숙박 혜택을 제공합니다.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          
+          <!-- Button to open 4 major services popup -->
+          <div style="margin-top: 50px; text-align: center;">
+            <button class="btn btn-gold-filled btn-large" id="openServiceDetailModal" style="padding: 18px 40px; font-size: 15px; font-weight: 600; letter-spacing: 0.05em; border-radius: 0;">4대 서비스 자세히 보기</button>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Pampas Section (3 Columns, White Background) -->
+    <section class="why-pampas-section" id="why">
+      <div class="container">
+        <div class="why-header">
+          <span class="why-subtitle">WHY PAMPAS</span>
+          <h2 class="why-title">왜 Pampas Life Membership인가요?</h2>
+          <p class="why-intro-text">
+            Pampas Life Membership은 단순한 상품 가입이 아니라,<br>
+            삶의 다양한 순간에 필요한 혜택과 서비스를 미리 준비하는 라이프 멤버십입니다.
+          </p>
+        </div>
+        
+        <div class="why-grid">
+          <!-- Card 1: Flexibility -->
+          <div class="why-card">
+            <div class="why-card-image-box">
+              <img src="https://res.cloudinary.com/dfkntvpmv/image/upload/v1782997920/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_10_11_30_1_lbklap.png" alt="필요한 순간 사용" class="why-card-img">
+              <span class="why-card-num">01</span>
+            </div>
+            <div class="why-card-content">
+              <h3 class="why-card-title">필요한 순간마다 쓸 수 있는 서비스</h3>
+              <p class="why-card-desc"><strong>필요한 순간 사용</strong><br>특정 상황에만 한정되지 않는 유연한 멤버십 구조로 귀하의 일상 속 요구사항을 만족시킵니다.</p>
+            </div>
+          </div>
+          
+          <!-- Card 2: Variety -->
+          <div class="why-card">
+            <div class="why-card-image-box">
+              <img src="https://res.cloudinary.com/dfkntvpmv/image/upload/v1782997920/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_10_11_30_2_nxkvik.png" alt="생활 혜택 중심" class="why-card-img">
+              <span class="why-card-num">02</span>
+            </div>
+            <div class="why-card-content">
+              <h3 class="why-card-title">다양한 라이프 혜택 하나의 멤버십으로</h3>
+              <p class="why-card-desc"><strong>생활 혜택 중심</strong><br>여행, 웨딩, 가족케어, 펫케어, 라이프케어까지 삶 전반을 아우르는 폭넓은 우대 혜택을 제공합니다.</p>
+            </div>
+          </div>
+          
+          <!-- Card 3: Customization -->
+          <div class="why-card">
+            <div class="why-card-image-box">
+              <img src="https://res.cloudinary.com/dfkntvpmv/image/upload/v1782997920/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_10_11_31_3_qghkvh.png" alt="상담 기반 맞춤 설계" class="why-card-img">
+              <span class="why-card-num">03</span>
+            </div>
+            <div class="why-card-content">
+              <h3 class="why-card-title">가족까지 생각한 설계 상담부터 이용까지</h3>
+              <p class="why-card-desc"><strong>상담 기반 맞춤 설계</strong><br>귀하와 가족의 상황에 정밀하게 맞춰 전담 라이프스타일 매니저가 혜택과 구체적인 이용 방식을 상세히 안내합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Membership Usage Scenarios Section (Split Layout, Navy Dark Background) -->
+    <section class="scenarios-section" id="scenarios">
+      <!-- Full-bleed interactive background layers -->
+      <div class="scenarios-bg-container">
+        <div class="scenarios-bg-layer active" id="bg-travel" style="background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1782998417/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_10_19_52_1_bmnlox.png');"></div>
+        <div class="scenarios-bg-layer" id="bg-wedding" style="background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1782998418/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_10_19_53_2_kbu2ux.png');"></div>
+        <div class="scenarios-bg-layer" id="bg-parent" style="background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1782998417/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_10_19_53_3_q9qaqw.png');"></div>
+        <div class="scenarios-bg-layer" id="bg-pet" style="background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1782998418/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_10_19_53_4_u8bv4g.png');"></div>
+        <div class="scenarios-bg-layer" id="bg-support" style="background-image: url('https://res.cloudinary.com/dfkntvpmv/image/upload/v1782998418/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_10_19_54_5_ghs9xd.png');"></div>
+        <div class="scenarios-bg-overlay"></div>
+      </div>
+
+      <div class="container" style="position: relative; z-index: 2;">
+        <div class="scenarios-header text-center">
+          <span class="scenarios-subtitle">MEMBERSHIP SCENARIOS</span>
+          <h2 class="scenarios-title">이런 순간에 Pampas Life가 함께합니다</h2>
+        </div>
+
+        <div class="scenarios-grid">
+          <!-- Left Column: Interactive Scenario List -->
+          <div class="scenarios-list">
+            <!-- Item 1 -->
+            <div class="scenario-item active" data-scenario="travel">
+              <div class="scenario-number">01</div>
+              <div class="scenario-info">
+                <h4 class="scenario-title">여행을 계획할 때</h4>
+                <p class="scenario-desc">가족 여행을 준비할 때, 크루즈, 리조트, 여행 관련 혜택을 상담받을 수 있습니다.</p>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="scenario-item" data-scenario="wedding">
+              <div class="scenario-number">02</div>
+              <div class="scenario-info">
+                <h4 class="scenario-title">가족 행사를 준비할 때</h4>
+                <p class="scenario-desc">자녀의 결혼을 준비할 때, 웨딩, 기념일, 가족 행사를 위한 고품격 서비스를 연결합니다.</p>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="scenario-item" data-scenario="parent">
+              <div class="scenario-number">03</div>
+              <div class="scenario-info">
+                <h4 class="scenario-title">부모님을 위한 준비가 필요할 때</h4>
+                <p class="scenario-desc">가족을 위한 최상의 라이프케어 혜택을 사전에 미리 준비하고 안내받을 수 있습니다.</p>
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="scenario-item" data-scenario="pet">
+              <div class="scenario-number">04</div>
+              <div class="scenario-info">
+                <h4 class="scenario-title">반려동물 케어가 필요할 때</h4>
+                <p class="scenario-desc">프리미엄 펫 관련 서비스를 통해 사랑하는 가족인 반려동물의 웰니스를 넓게 케어합니다.</p>
+              </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="scenario-item" data-scenario="support">
+              <div class="scenario-number">05</div>
+              <div class="scenario-info">
+                <h4 class="scenario-title">중요한 순간 도움이 필요할 때</h4>
+                <p class="scenario-desc">전문 큐레이터의 상담과 밀착 지원 서비스를 통해 필요한 절차와 케어를 완벽히 지원받습니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Empty to allow the full-bleed background image to shine on the right -->
+          <div class="scenarios-empty-panel" style="pointer-events: none;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Representative Membership Plans Section (3 Columns, Light Gray Background) -->
+    <section class="membership-plans-section" id="plans">
+      <div class="container">
+        <div class="plans-header text-center">
+          <span class="plans-subtitle">MEMBERSHIP PLANS</span>
+          <h2 class="plans-title">나에게 맞는 멤버십을 선택하세요</h2>
+          <p class="plans-intro-text">월 납입금 및 세부 가입 조건은 상담을 통해 상세히 안내해 드립니다.</p>
+        </div>
+
+        <div class="plans-grid">
+          <!-- Card 1: Basic Life -->
+          <div class="plan-card plan-basic">
+            <div class="plan-icon-wrapper">
+              <svg viewBox="0 0 24 24" class="plan-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/></svg>
+            </div>
+            <div class="plan-badge">Basic Life</div>
+            <h3 class="plan-subtitle">생활 혜택 중심</h3>
+            <p class="plan-target">기본 생활 혜택을 원하는 고객</p>
+            <ul class="plan-details-list">
+              <li>일상에 밀착된 기본 생활 지원 우대</li>
+              <li>제휴 다이닝 및 문화 상시 할인 제공</li>
+              <li>기본 비대면 컨시어지 채널 상시 상담</li>
+            </ul>
+            <div class="plan-price-notice">월 납입금은 상담을 통해 안내드립니다</div>
+            <a href="#apply" class="btn btn-outline-dark btn-full open-consult-modal">상담하기</a>
+          </div>
+
+          <!-- Card 2: Family Life (Recommended) -->
+          <div class="plan-card plan-family recommended">
+            <div class="recommended-tag">RECOMMENDED</div>
+            <div class="plan-icon-wrapper">
+              <svg viewBox="0 0 24 24" class="plan-icon"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/></svg>
+            </div>
+            <div class="plan-badge">Family Life</div>
+            <h3 class="plan-subtitle">가족 혜택 중심</h3>
+            <p class="plan-target">가족 단위 혜택을 원하는 고객</p>
+            <ul class="plan-details-list">
+              <li>가족 중심 생활 혜택 & 맞춤 밀착 상담</li>
+              <li>반려동물 케어 및 가족 행사 매칭 지원</li>
+              <li>피트니스 및 제휴 레스토랑 패밀리 카드 발급</li>
+            </ul>
+            <div class="plan-price-notice">월 납입금은 상담을 통해 안내드립니다</div>
+            <a href="#apply" class="btn btn-gold-filled btn-full open-consult-modal">상담하기</a>
+          </div>
+
+          <!-- Card 3: Premium Life -->
+          <div class="plan-card plan-premium">
+            <div class="plan-icon-wrapper">
+              <svg viewBox="0 0 24 24" class="plan-icon"><path d="M12 2L2 9l10 13 10-13L12 2zm0 3.23L17.77 9H6.23L12 5.23zM5.38 11h13.24L12 19.5 5.38 11z" fill="currentColor"/></svg>
+            </div>
+            <div class="plan-badge">Premium Life</div>
+            <h3 class="plan-subtitle">프리미엄 혜택</h3>
+            <p class="plan-target">여행, 웨딩, 라이프케어까지 폭넓게 원하는 고객</p>
+            <ul class="plan-details-list">
+              <li>여행·웨딩·라이프케어 전 영역 VVIP 올인원</li>
+              <li>개인 전담 컨시어지 24/7 전문 매칭 의전</li>
+              <li>크루즈 요팅 대관 및 연간 한정 갈라 초청</li>
+            </ul>
+            <div class="plan-price-notice">월 납입금은 상담을 통해 안내드립니다</div>
+            <a href="#apply" class="btn btn-outline-dark btn-full open-consult-modal">상담하기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefit Comparison Section (Vibrant Gradient Glassmorphism Layout) -->
+    <section class="comparison-section" id="compare">
+      <div class="container">
+        <div class="comparison-header text-center">
+          <span class="comparison-subtitle">SELECTION CRITERIA</span>
+          <h2 class="comparison-title">일반 상품 가입과 라이프 멤버십의 차이</h2>
+          <p class="comparison-intro-text">
+            단순한 상품 가입을 넘어, 라이프스타일 전반을 케어하는<br>팜파스만의 차별화된 가치를 비교해 보세요.
+          </p>
+        </div>
+
+        <div class="comparison-grid-v4">
+          <!-- Card 1: 제공 범위 -->
+          <div class="comp-card-v4">
+            <div class="comp-card-header">
+              <div class="comp-icon-box blue-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/></svg>
+              </div>
+              <h3 class="comp-card-title">제공 범위 (Scope)</h3>
+            </div>
+            
+            <div class="comp-box-general">
+              <div class="comp-label-row">
+                <span class="comp-badge-general">일반 가입</span>
+                <span class="comp-status-icon select-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="none" stroke="#94A3B8" stroke-width="2"/><line x1="8" y1="12" x2="16" y2="12" stroke="#94A3B8" stroke-width="2"/></svg>
+                </span>
+              </div>
+              <p class="comp-text-title">단일 목적 중심의 서비스</p>
+              <p class="comp-text-desc">특정 단일 이벤트나 목적에 한정된 서비스만 적용되어 라이프 전반의 혜택을 받기 어렵습니다.</p>
+            </div>
+
+            <div class="comp-box-pampas">
+              <div class="comp-label-row">
+                <span class="comp-badge-pampas">Pampas Life</span>
+                <span class="comp-status-icon select-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="rgba(234, 88, 12, 0.08)" stroke="#EA580C" stroke-width="2"/><path d="M6 12l4 4 8-8" fill="none" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+              <p class="comp-text-title">다양한 라이프 통합 혜택</p>
+              <p class="comp-text-desc">여행, 웨딩, 가족케어, 펫케어, 라이프케어까지 삶 전체를 아우르는 폭넓은 우대 혜택을 제공합니다.</p>
+            </div>
+          </div>
+
+          <!-- Card 2: 이용 시점 -->
+          <div class="comp-card-v4">
+            <div class="comp-card-header">
+              <div class="comp-icon-box orange-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z" fill="currentColor"/></svg>
+              </div>
+              <h3 class="comp-card-title">이용 시점 (Timing)</h3>
+            </div>
+            
+            <div class="comp-box-general">
+              <div class="comp-label-row">
+                <span class="comp-badge-general">일반 가입</span>
+                <span class="comp-status-icon select-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="none" stroke="#94A3B8" stroke-width="2"/><line x1="8" y1="12" x2="16" y2="12" stroke="#94A3B8" stroke-width="2"/></svg>
+                </span>
+              </div>
+              <p class="comp-text-title">필요 시점에만 제한적 이용</p>
+              <p class="comp-text-desc">만기 환급이나 정해진 대형 행사 시점 등 제한적인 이벤트가 발생해야 혜택을 수령할 수 있습니다.</p>
+            </div>
+
+            <div class="comp-box-pampas">
+              <div class="comp-label-row">
+                <span class="comp-badge-pampas">Pampas Life</span>
+                <span class="comp-status-icon select-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="rgba(234, 88, 12, 0.08)" stroke="#EA580C" stroke-width="2"/><path d="M6 12l4 4 8-8" fill="none" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+              <p class="comp-text-title">라이프사이클 전반 상시 활용</p>
+              <p class="comp-text-desc">특정 경조사나 연도에 구애받지 않고, 고객이 필요한 매년, 매월 라이프케어 혜택을 즉시 활용할 수 있습니다.</p>
+            </div>
+          </div>
+
+          <!-- Card 3: 상담 및 설계 -->
+          <div class="comp-card-v4">
+            <div class="comp-card-header">
+              <div class="comp-icon-box green-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z" fill="currentColor"/></svg>
+              </div>
+              <h3 class="comp-card-title">상담 및 설계 (Consulting)</h3>
+            </div>
+            
+            <div class="comp-box-general">
+              <div class="comp-label-row">
+                <span class="comp-badge-general">일반 가입</span>
+                <span class="comp-status-icon select-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="none" stroke="#94A3B8" stroke-width="2"/><line x1="8" y1="12" x2="16" y2="12" stroke="#94A3B8" stroke-width="2"/></svg>
+                </span>
+              </div>
+              <p class="comp-text-title">일률적 상품 소개 위주</p>
+              <p class="comp-text-desc">고객의 성향과 무관하게 카탈로그 규격에 맞춘 단일 패키지 상품 구조만을 설명하고 체결합니다.</p>
+            </div>
+
+            <div class="comp-box-pampas">
+              <div class="comp-label-row">
+                <span class="comp-badge-pampas">Pampas Life</span>
+                <span class="comp-status-icon select-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="rgba(234, 88, 12, 0.08)" stroke="#EA580C" stroke-width="2"/><path d="M6 12l4 4 8-8" fill="none" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+              <p class="comp-text-title">1:1 밀착 에스코트 설계</p>
+              <p class="comp-text-desc">전담 라이프스타일 큐레이터가 배치되어 고객의 성향, 니즈, 일정에 맞춘 프리미엄 케어를 직접 설계합니다.</p>
+            </div>
+          </div>
+
+          <!-- Card 4: 회원 혜택 공유 -->
+          <div class="comp-card-v4">
+            <div class="comp-card-header">
+              <div class="comp-icon-box purple-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/></svg>
+              </div>
+              <h3 class="comp-card-title">회원 혜택 공유 (Sharing)</h3>
+            </div>
+            
+            <div class="comp-box-general">
+              <div class="comp-label-row">
+                <span class="comp-badge-general">일반 가입</span>
+                <span class="comp-status-icon select-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="none" stroke="#94A3B8" stroke-width="2"/><line x1="8" y1="12" x2="16" y2="12" stroke="#94A3B8" stroke-width="2"/></svg>
+                </span>
+              </div>
+              <p class="comp-text-title">가입 회원 본인 한정 제공</p>
+              <p class="comp-text-desc">직계 가족이 아닌 제3자 또는 지인 등 타인에게 명의 양도 및 혜택 양수도가 불가능하거나 매우 복잡합니다.</p>
+            </div>
+
+            <div class="comp-box-pampas">
+              <div class="comp-label-row">
+                <span class="comp-badge-pampas">Pampas Life</span>
+                <span class="comp-status-icon select-none">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="rgba(234, 88, 12, 0.08)" stroke="#EA580C" stroke-width="2"/><path d="M6 12l4 4 8-8" fill="none" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+              <p class="comp-text-title">가족 합산 및 자유로운 공유</p>
+              <p class="comp-text-desc">회원 혜택 양도 및 패밀리 멤버십 세컨드 카드 공유가 편리하여 하나의 구좌로 높은 효용성을 보증합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consultation Request CTA Section (Navy Dark Background with Premium Form) -->
+    <section class="consultation-section" id="apply">
+      <div class="consultation-overlay"></div>
+      <div class="container consultation-content">
+        <div class="consultation-header text-center">
+          <span class="consultation-subtitle">CONSULTATION</span>
+          <h2 class="consultation-title">나에게 맞는 라이프 혜택이 궁금하다면?</h2>
+          <p class="consultation-desc">고객님의 상황에 맞춰 이용 가능한 멤버십 혜택을 안내해드립니다.</p>
+        </div>
+
+        <div class="consultation-form-wrapper">
+          <form id="consultationForm" class="consultation-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userName">이름</label>
+                <input type="text" id="userName" name="userName" placeholder="성함을 입력해주세요" required>
+              </div>
+              <div class="form-group">
+                <label for="userPhone">연락처</label>
+                <input type="tel" id="userPhone" name="userPhone" placeholder="휴대폰 번호를 입력해주세요 (ex. 010-0000-0000)" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="interestBenefit">관심 혜택 선택</label>
+                <select id="interestBenefit" name="interestBenefit" required>
+                  <option value="" disabled selected>관심 분야를 선택하세요</option>
+                  <option value="travel">여행/크루즈 혜택</option>
+                  <option value="wedding">웨딩 혜택</option>
+                  <option value="family">가족 라이프케어</option>
+                  <option value="pet">펫케어</option>
+                  <option value="all">멤버십 전체 상담</option>
+                  <option value="unknown">잘 모르겠음</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="consultTime">상담 가능 시간 선택</label>
+                <select id="consultTime" name="consultTime" required>
+                  <option value="" disabled selected>연락받으실 편한 시간을 선택하세요</option>
+                  <option value="anytime">언제든 상관없음</option>
+                  <option value="morning">오전 (09:00 ~ 12:00)</option>
+                  <option value="afternoon">오후 (12:00 ~ 18:00)</option>
+                  <option value="evening">저녁 (18:00 ~ 20:00)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-footer text-center">
+              <button type="submit" class="btn btn-gold-filled btn-large btn-full-mobile">내 혜택 상담 신청하기</button>
+              <p class="form-privacy-notice">신청 시 개인정보처리방침에 동의한 것으로 간주되며, 상담 목적 외에는 이용되지 않습니다.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & Transparency Section (5 Cards Grid & FAQ Accordion, White Background) -->
+    <section class="trust-section" id="trust">
+      <div class="container">
+        <div class="trust-header text-center">
+          <span class="trust-subtitle">TRUST & TRANSPARENCY</span>
+          <h2 class="trust-title">고객이 안심할 수 있도록 투명하게 안내합니다</h2>
+        </div>
+
+        <!-- 5 Trust Pillars Grid -->
+        <div class="trust-grid">
+          <!-- Pillar 1: 전문 상담 -->
+          <div class="trust-card">
+            <div class="trust-icon-box">
+              <svg viewBox="0 0 24 24" class="trust-icon">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4 class="trust-card-title">전문 상담</h4>
+            <p class="trust-card-desc">상담 신청 후 전담 플래너가 24시간 이내에 개별 연락하여 가입 목적에 맞게 1:1 맞춤 설계를 진행합니다.</p>
+          </div>
+
+          <!-- Pillar 2: 이용 절차 -->
+          <div class="trust-card">
+            <div class="trust-icon-box">
+              <svg viewBox="0 0 24 24" class="trust-icon">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                <polyline points="12 6 12 12 16 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4 class="trust-card-title">이용 절차</h4>
+            <p class="trust-card-desc">가입 완료 시 전용 컨시어지 채널을 통해 즉시 예약이 가능하며, 다양한 혜택을 제한 없이 유연하게 활용합니다.</p>
+          </div>
+
+          <!-- Pillar 3: 계약 안내 -->
+          <div class="trust-card">
+            <div class="trust-icon-box">
+              <svg viewBox="0 0 24 24" class="trust-icon">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14 2 14 8 20 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4 class="trust-card-title">계약 안내</h4>
+            <p class="trust-card-desc">공정거래위원회 표준약관을 철저히 준수하며 가입 즉시 보증보험 및 예치계약을 안전하게 체결합니다.</p>
+          </div>
+
+          <!-- Pillar 4: 혜택 안내 -->
+          <div class="trust-card">
+            <div class="trust-icon-box">
+              <svg viewBox="0 0 24 24" class="trust-icon">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4 class="trust-card-title">혜택 안내</h4>
+            <p class="trust-card-desc">여행, 웨딩, 가족케어, 펫케어 등 삶 전반의 차별화된 혜택의 구체적인 범위와 공제 조건을 상시 공개합니다.</p>
+          </div>
+
+          <!-- Pillar 5: 고객센터 -->
+          <div class="trust-card">
+            <div class="trust-icon-box">
+              <svg viewBox="0 0 24 24" class="trust-icon">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4 class="trust-card-title">고객센터</h4>
+            <p class="trust-card-desc">평일 09:00 ~ 18:00 운영되며, VVIP 회원은 24/7 전용 핫라인을 통해 라이프스타일 큐레이터 직통 의전을 제공합니다.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Subsection -->
+        <div class="trust-faq-wrapper">
+          <h3 class="faq-section-title text-center">자주 묻는 질문 (FAQ)</h3>
+          
+          <div class="faq-accordion-v2">
+            <!-- FAQ 1 -->
+            <div class="faq-item-v2">
+              <button class="faq-trigger-v2">
+                <span>Q. 상조 서비스와 라이프 멤버십은 어떻게 다른가요?</span>
+                <svg viewBox="0 0 24 24" class="faq-arrow-v2"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-panel-v2">
+                <p>기존 상조가 오직 장례에만 한정되어 먼 훗날 소비되는 단일 목적 상품이라면, 팜파스 라이프 멤버십은 일상에서 즐기는 크루즈/여행, 특별한 날을 위한 웨딩, 소중한 반려동물을 위한 케어 등 인생 전반의 다채로운 혜택들을 가입 시점부터 상시 전환하여 이용할 수 있는 다목적 라이프스타일 솔루션입니다.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-item-v2">
+              <button class="faq-trigger-v2">
+                <span>Q. 납입금은 안전하게 보증되나요? 계약 해지 시 환급 규정이 궁금합니다.</span>
+                <svg viewBox="0 0 24 24" class="faq-arrow-v2"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-panel-v2">
+                <p>팜파스 라이프멤버십의 모든 회원 납입금은 공정거래위원회 표준약관 및 관련 법률에 의거하여 안전하게 보증 예치 계약이 체결되며, 신뢰할 수 있는 외부 신탁기관과 금융사에 분리 예치되어 투명하게 보증됩니다. 또한 중도 해지 시에도 공정거래위원회 표준 약관 상의 해약 환급금 지급 비율을 투명하게 준수하여 환급 처리가 진행됩니다.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-item-v2">
+              <button class="faq-trigger-v2">
+                <span>Q. 가입 절차와 첫 상담 시 준비해야 할 서류가 있나요?</span>
+                <svg viewBox="0 0 24 24" class="faq-arrow-v2"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="faq-panel-v2">
+                <p>첫 온라인 상담 신청 단계에서는 별도의 서류 제출이 전혀 필요하지 않습니다. 성함과 연락처, 관심 분야만 간략히 작성하여 제출해 주시면, 전담 라이프스타일 큐레이터가 배정되어 개별 맞춤 상담을 상세하게 안내해 드립니다. 최종 계약 체결 시점의 가입 서류 및 절차도 전담 큐레이터가 1:1로 밀착 서포트해 드려 번거로움 없이 편안하게 준비하실 수 있습니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Simple Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container-v2">
+      <div class="footer-logo-row">
+        <h3 class="footer-logo">PAMPAS <span>LIFE</span></h3>
+      </div>
+      
+      <div class="footer-info-row">
+        <p class="footer-biz-info">
+          <span>(주)팜파스 라이프</span>
+          <span>대표자: 홍길동</span>
+          <span>사업자등록번호: 123-45-67890</span>
+          <span>주소: 서울특별시 강남구 테헤란로 123 팜파스타워 15층</span>
+          <span>고객센터: 1544-8826 (평일 09:00 ~ 18:00)</span>
+        </p>
+        <p class="footer-legal-links-row">
+          <a href="#" class="legal-link bold">이용약관</a>
+          <a href="#" class="legal-link bold">개인정보처리방침</a>
+          <a href="#" class="legal-link">이메일무단수집거부</a>
+        </p>
+      </div>
+
+      <div class="footer-copyright-row" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <p class="copyright">Copyright &copy; Pampas Life. All rights reserved.</p>
+        <a href="admin.html" target="_blank" rel="noopener" style="font-size: 11px; color: #52525B; text-decoration: none; opacity: 0.7; transition: opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Action Buttons -->
+  <div class="floating-actions">
+    <a href="tel:1544-8826" class="floating-btn btn-phone" aria-label="전화 상담">
+      <svg viewBox="0 0 24 24" class="floating-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" fill="currentColor"/></svg>
+      <span>전화상담</span>
+    </a>
+    <button class="floating-btn btn-1to1" id="open1to1Modal" aria-label="1:1 문의">
+      <svg viewBox="0 0 24 24" class="floating-icon"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>1:1문의</span>
+    </button>
+    <button class="floating-btn btn-consult open-consult-modal" aria-label="상담 문의">
+      <svg viewBox="0 0 24 24" class="floating-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>상담문의</span>
+    </button>
+  </div>
+
+  <!-- Consultation Modal (Pop-up) -->
+  <div class="modal-overlay" id="consultModal">
+    <div class="modal-container">
+      <button class="modal-close" id="closeConsultModal" aria-label="닫기">&times;</button>
+      <div class="modal-header">
+        <span class="modal-subtitle">CONSULTATION</span>
+        <h3 class="modal-title">혜택 상담 신청하기</h3>
+        <p class="modal-desc">고객님의 상황에 맞춰 이용 가능한 멤버십 혜택을 안내해드립니다.</p>
+      </div>
+      <form id="modalConsultForm" class="modal-form">
+        <div class="modal-form-group">
+          <label for="modalUserName">이름</label>
+          <input type="text" id="modalUserName" name="userName" placeholder="성함을 입력해주세요" required>
+        </div>
+        <div class="modal-form-group">
+          <label for="modalUserPhone">연락처</label>
+          <input type="tel" id="modalUserPhone" name="userPhone" inputmode="numeric" placeholder="휴대폰 번호를 입력해주세요" required>
+        </div>
+        <div class="modal-form-group">
+          <label for="modalInterestBenefit">관심 혜택 선택</label>
+          <select id="modalInterestBenefit" name="interestBenefit" required>
+            <option value="" disabled selected>관심 분야를 선택하세요</option>
+            <option value="travel">여행/크루즈 혜택</option>
+            <option value="wedding">웨딩 혜택</option>
+            <option value="family">가족 라이프케어</option>
+            <option value="pet">펫케어</option>
+            <option value="all">멤버십 전체 상담</option>
+            <option value="unknown">잘 모르겠음</option>
+          </select>
+        </div>
+        <div class="modal-form-group">
+          <label for="modalConsultTime">상담 가능 시간 선택</label>
+          <select id="modalConsultTime" name="consultTime" required>
+            <option value="" disabled selected>연락받으실 편한 시간을 선택하세요</option>
+            <option value="anytime">언제든 상관없음</option>
+            <option value="morning">오전 (09:00 ~ 12:00)</option>
+            <option value="afternoon">오후 (12:00 ~ 18:00)</option>
+            <option value="evening">저녁 (18:00 ~ 20:00)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-gold-filled btn-full">상담 신청하기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 1:1 Inquiry Modal (Pop-up) -->
+  <div class="modal-overlay" id="inquiryModal">
+    <div class="modal-container">
+      <button class="modal-close" id="closeInquiryModal" aria-label="닫기">&times;</button>
+      <div class="modal-header">
+        <span class="modal-subtitle">1:1 INQUIRY</span>
+        <h3 class="modal-title">1:1 문의하기</h3>
+        <p class="modal-desc">궁금하신 점을 남겨주시면 이메일 또는 연락처로 신속히 답변드리겠습니다.</p>
+      </div>
+      <form id="modalInquiryForm" class="modal-form">
+        <div class="modal-form-group">
+          <label for="inquiryName">이름</label>
+          <input type="text" id="inquiryName" placeholder="성함을 입력해주세요" required>
+        </div>
+        <div class="modal-form-group">
+          <label for="inquiryPhone">연락처</label>
+          <input type="tel" id="inquiryPhone" inputmode="numeric" placeholder="휴대폰 번호를 입력해주세요" required>
+        </div>
+        <div class="modal-form-group">
+          <label for="inquiryMessage">문의 내용</label>
+          <textarea id="inquiryMessage" placeholder="문의하실 내용을 입력해주세요" rows="4" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.02); border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 13px;" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-dark-filled btn-full">문의 제출하기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4 Major Services Detail Modal (Pop-up) -->
+  <div class="modal-overlay" id="serviceDetailModal">
+    <div class="modal-container modal-large">
+      <button class="modal-close" id="closeServiceDetailModal" aria-label="닫기">&times;</button>
+      <div class="modal-header">
+        <span class="modal-subtitle">CORE SERVICES</span>
+        <h3 class="modal-title">팜파스 4대 핵심 서비스</h3>
+        <p class="modal-desc">각 분야별 품격 있는 보장 및 차별화된 세부 서비스 내역을 안내해 드립니다.</p>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="service-tabs">
+        <button class="service-tab-btn active" data-tab="cruise">크루즈 서비스</button>
+        <button class="service-tab-btn" data-tab="wedding">웨딩 서비스</button>
+        <button class="service-tab-btn" data-tab="funeral">장례 서비스</button>
+        <button class="service-tab-btn" data-tab="pet-funeral">펫장례 서비스</button>
+      </div>
+
+      <!-- Tab Content Panels -->
+      <div class="service-tab-contents">
+        <!-- Tab 1: Cruise -->
+        <div class="service-tab-panel active" id="tab-panel-cruise">
+          <h4 class="tab-panel-title">1. 프리미엄 크루즈 서비스</h4>
+          <div class="tab-panel-image-box">
+            <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?q=80&w=900&auto=format&fit=crop" alt="크루즈 서비스 배너" class="tab-panel-img">
+          </div>
+          <div class="table-responsive">
+            <table class="service-table">
+              <thead>
+                <tr>
+                  <th style="width: 30%;">구분</th>
+                  <th style="width: 70%;">제공 서비스 상세 내역</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="table-cat">상품 구성</td>
+                  <td class="table-desc">동남아(싱가포르+말레이시아+인도네시아) 등 고품격 크루즈 코스</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">보장 인원</td>
+                  <td class="table-desc">성인 1명 기준 서비스 제공</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">특별 혜택</td>
+                  <td class="table-desc"><strong>20만원 특별할인 혜택</strong> 적용</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">제휴사</td>
+                  <td class="table-desc">한진관광 공식 제휴 상품</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="tab-panel-notice" style="font-size: 13px; color: #E53E3E; margin-top: 15px; font-weight: 600; line-height: 1.5;">
+            ※ 크루즈 여행은 최소 6개월 이전 예약 및 상담을 받으셔야 합니다.
+          </p>
+        </div>
+
+        <!-- Tab 2: Wedding -->
+        <div class="service-tab-panel" id="tab-panel-wedding">
+          <h4 class="tab-panel-title">2. 프리미엄 웨딩 서비스</h4>
+          <div class="tab-panel-image-box">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=900&auto=format&fit=crop" alt="웨딩 서비스 배너" class="tab-panel-img">
+          </div>
+          <div class="table-responsive">
+            <table class="service-table">
+              <thead>
+                <tr>
+                  <th style="width: 30%;">품목</th>
+                  <th style="width: 70%;">내용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="table-cat">리허설 촬영</td>
+                  <td class="table-desc">12R20P 디지털 편집 앨범 1권</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">본식 스냅 촬영</td>
+                  <td class="table-desc">12R 30P 스토리 앨범 1권</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">본식 원판 촬영</td>
+                  <td class="table-desc">12R 10P 양가 부모님용 2권</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">웨딩 드레스</td>
+                  <td class="table-desc">4벌 + 1벌(신상품 드레스)</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">턱시도</td>
+                  <td class="table-desc">2벌 + 1벌(조끼)</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">메이크업</td>
+                  <td class="table-desc">리허설 + 본식</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">헤어</td>
+                  <td class="table-desc">리허설 + 본식</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">웨딩 부케</td>
+                  <td class="table-desc">부케 1 + 부토니아 1 + 코사지 6개</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">웨딩 액자</td>
+                  <td class="table-desc">20R 예식장 전시용 액자 1개</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">원본 CD</td>
+                  <td class="table-desc">원본 파일 10만원 별도 (리허설+본식)</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">헬퍼비</td>
+                  <td class="table-desc">리허설 10만원, 본식 20만원 별도</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="tab-panel-notice" style="font-size: 12px; color: var(--color-text-secondary); margin-top: 15px; line-height: 1.5;">
+            ※ 위 상품 내용은 웨딩 행사 시 상품내용이 변경될 수 있음을 알려드립니다.
+          </p>
+        </div>
+
+        <!-- Tab 3: Funeral -->
+        <div class="service-tab-panel" id="tab-panel-funeral">
+          <h4 class="tab-panel-title">3. 격조 높은 라이프케어(장례) 서비스</h4>
+          <div class="tab-panel-image-box">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=900&auto=format&fit=crop" alt="장례 서비스 배너" class="tab-panel-img">
+          </div>
+          <div class="table-responsive">
+            <table class="service-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%;">대분류</th>
+                  <th style="width: 35%;">품목 (프리미엄상품 396만원)</th>
+                  <th style="width: 45%;">내용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- 장례서비스 -->
+                <tr>
+                  <td rowspan="8" class="table-cat" style="text-align: center; font-weight: bold; background-color: #f8fafc; vertical-align: middle; border: 1px solid var(--border-color);">장례서비스</td>
+                  <td class="table-cat">관</td>
+                  <td class="table-desc">오동나무고급3호</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">수의</td>
+                  <td class="table-desc">우리명품수의</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">도복, 원삼, 천금, 지금</td>
+                  <td class="table-desc">본건, 삼베</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">영정</td>
+                  <td class="table-desc">본건</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">베개, 습신, 수시포, 탈지면, 알코올</td>
+                  <td class="table-desc">필요량 제공</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">한지, 보공, 받침대, 예단, 다라니경</td>
+                  <td class="table-desc">필요량 제공</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">관보</td>
+                  <td class="table-desc">우단관보</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">결관바</td>
+                  <td class="table-desc">소칭 40(면)</td>
+                </tr>
+                
+                <!-- 의전용품 - 전통식 -->
+                <tr>
+                  <td rowspan="5" class="table-cat" style="text-align: center; font-weight: bold; background-color: #f8fafc; vertical-align: middle; border: 1px solid var(--border-color);">의전용품<br>(전통식)</td>
+                  <td class="table-cat">굴건제복</td>
+                  <td class="table-desc">직계상주</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">바지저고리</td>
+                  <td class="table-desc">직계상주</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">복조끼 삼베 치마 저고리</td>
+                  <td class="table-desc">직계상주</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">두루마기, 치마 저고리</td>
+                  <td class="table-desc">직계상주</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">행전, 두건, 요질, 수질, 작지, 완장</td>
+                  <td class="table-desc">필요량 전부 제공</td>
+                </tr>
+
+                <!-- 의전용품 - 현대식 -->
+                <tr>
+                  <td rowspan="2" class="table-cat" style="text-align: center; font-weight: bold; background-color: #f8fafc; vertical-align: middle; border: 1px solid var(--border-color);">의전용품<br>(현대식)</td>
+                  <td class="table-cat">검정 양복 대여(남)</td>
+                  <td class="table-desc">5벌대여(와이셔츠, 넥타이 포함) 5벌 대여</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">치마 저고리(검정 또는 흰색)</td>
+                  <td class="table-desc">5벌 대여</td>
+                </tr>
+
+                <!-- 의전용품 - 부속품 -->
+                <tr>
+                  <td rowspan="3" class="table-cat" style="text-align: center; font-weight: bold; background-color: #f8fafc; vertical-align: middle; border: 1px solid var(--border-color);">의전용품<br>(부속품)</td>
+                  <td class="table-cat">부의록, 방명록</td>
+                  <td class="table-desc">제공</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">축문, 위패</td>
+                  <td class="table-desc">제공</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">기타 제공</td>
+                  <td class="table-desc">운아, 혼백, 향, 초, 장갑, 액자 리본, 짚신, 공포, 상가 표시</td>
+                </tr>
+
+                <!-- 행사요원서비스 -->
+                <tr>
+                  <td rowspan="2" class="table-cat" style="text-align: center; font-weight: bold; background-color: #f8fafc; vertical-align: middle; border: 1px solid var(--border-color);">행사요원<br>서비스</td>
+                  <td class="table-cat">장례지도사</td>
+                  <td class="table-desc">2명 파견</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">행사도우미</td>
+                  <td class="table-desc">2일간 3명(1일 8시간 기준)</td>
+                </tr>
+
+                <!-- 스페셜 서비스 -->
+                <tr>
+                  <td rowspan="3" class="table-cat" style="text-align: center; font-weight: bold; background-color: #f8fafc; vertical-align: middle; border: 1px solid var(--border-color);">스페셜<br>서비스</td>
+                  <td class="table-cat">염습</td>
+                  <td class="table-desc">황실특수대령</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">제단장식</td>
+                  <td class="table-desc">지원 100,000원</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">장의차</td>
+                  <td class="table-desc">장의버스 또는 장의리무진 선택 1, 왕복 200km 무료 (2차 장지 추가요금 발생)</td>
+                </tr>
+
+                <!-- 대여품 -->
+                <tr>
+                  <td rowspan="2" class="table-cat" style="text-align: center; font-weight: bold; background-color: #f8fafc; vertical-align: middle; border: 1px solid var(--border-color);">대여품</td>
+                  <td class="table-cat">근조기, 조등</td>
+                  <td class="table-desc">제공</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">향로, 촛대, 잔대, 병풍</td>
+                  <td class="table-desc">필요시 제공</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 4: Pet Funeral -->
+        <div class="service-tab-panel" id="tab-panel-pet-funeral">
+          <h4 class="tab-panel-title">4. 동반자를 위한 프리미엄 펫장례 서비스</h4>
+          <div class="tab-panel-image-box">
+            <img src="https://images.unsplash.com/photo-1581888227599-779811939961?q=80&w=900&auto=format&fit=crop" alt="펫장례 서비스 배너" class="tab-panel-img">
+          </div>
+          <div class="table-responsive">
+            <table class="service-table">
+              <thead>
+                <tr>
+                  <th style="width: 30%;">구분</th>
+                  <th style="width: 70%;">제공 서비스 상세 내역</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="table-cat">경건한 의전 절차</td>
+                  <td class="table-desc">반려동물 전용 장례식장 개별 추모실 대관, 반려동물 전문 장례지도사 배정, 개별 단독 화장 및 염습/추모 진행</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">의전 및 장례 용품</td>
+                  <td class="table-desc">반려동물 전용 규격 소형 오동나무 관 제공, 친환경 한지 유기농 수의 제공, 영구 보존용 기능성 분골 유골함 제공</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">메모리얼 서비스</td>
+                  <td class="table-desc">반려동물의 분골을 고온 압축하여 보석화하는 '루세떼(메모리얼 스톤)' 제작 지원 및 액자 리본 등 추모 용품 무상 지원</td>
+                </tr>
+                <tr>
+                  <td class="table-cat">제휴 혜택</td>
+                  <td class="table-desc">수도권 프리미엄 친환경 봉안당(납골당) 입점 및 안치 시 특별 제휴 할인가 적용</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 30px; text-align: center;">
+        <button class="btn btn-gold-filled open-consult-modal" id="modalServiceConsultBtn" style="padding: 12px 30px; font-size: 14px; border-radius: 0;">본 서비스 관련 상담 문의하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Alert Modal (Beautiful replacement for window.alert) -->
+  <div class="modal-overlay" id="customAlertModal" style="z-index: 10000; background: rgba(13, 18, 31, 0.85); backdrop-filter: blur(8px);">
+    <div class="modal-container" style="max-width: 420px; width: 90%; padding: 40px 30px; background: #FFF; border: 1px solid var(--border-color); text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); border-radius: 0;">
+      <div style="width: 50px; height: 50px; background: #FEFCE8; border: 1px solid var(--color-gold); display: inline-flex; justify-content: center; align-items: center; margin: 0 auto 25px auto;">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--color-gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h3 id="customAlertTitle" style="font-size: 18px; font-weight: 700; color: var(--color-dark); margin: 0 0 15px 0;">접수 완료</h3>
+      <div id="customAlertContent" style="font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.6; text-align: left; margin-bottom: 30px; background: #F8FAFC; padding: 20px; border: 1px solid var(--border-color); border-radius: 0;">
+        <!-- Dynamic receipt details injected here -->
+      </div>
+      <button id="closeCustomAlertBtn" class="btn btn-dark-filled btn-full" style="padding: 12px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; border: none; border-radius: 0; font-family: inherit;">확인</button>
+    </div>
+  </div>
+
+  <!-- Script File for Interaction -->
+  <script src="app.js"></script>
+</body>
+</html>
