@@ -750,6 +750,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+  // Touch Swipe for Mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const handleGesture = () => {
+    if (activeSlides.length <= 1) return;
+    const swipeDistance = touchEndX - touchStartX;
+    const minSwipeDistance = 50;
+    
+    if (swipeDistance < -minSwipeDistance) {
+      nextPromoSlide();
+    } else if (swipeDistance > minSwipeDistance) {
+      prevPromoSlide();
+    }
+  };
+
+  const promoWrapper = document.querySelector('.promo-carousel-wrapper');
+  if (promoWrapper) {
+    promoWrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    promoWrapper.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleGesture();
+    }, { passive: true });
+  }
+
   initPromoModal();
 
   window.addEventListener('load', () => {
