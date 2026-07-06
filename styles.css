@@ -3108,25 +3108,75 @@ h1, h2, h3, h4 {
 
 @media (max-width: 768px) {
   .cert-section {
-    padding: 60px 15px;
+    padding: 40px 12px;
+  }
+  .cert-card {
+    padding: 8px;
   }
   .cert-card-inner {
-    padding: 40px 20px;
+    padding: 30px 15px;
+  }
+  .cert-logo-container {
+    margin-bottom: 12px;
+  }
+  .cert-logo-mark {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 4px;
+  }
+  .cert-logo-title {
+    font-size: 14px;
+  }
+  .cert-logo-subtitle {
+    font-size: 7px;
+    margin-top: 2px;
+  }
+  .cert-divider {
+    margin: 8px 0 16px 0;
+    width: 120px;
   }
   .cert-title {
-    font-size: 26px;
-    margin-bottom: 25px;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .cert-body {
+    margin-bottom: 20px;
   }
   .cert-text-line {
-    font-size: 14px;
-    line-height: 1.9;
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+  .cert-footer {
+    margin-top: 5px;
+    gap: 10px;
   }
   .cert-thanks {
-    font-size: 16px;
+    font-size: 15px;
   }
   .cert-watermark {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
+  }
+  .cert-corner {
+    width: 24px;
+    height: 24px;
+  }
+  .cert-corner.top-left {
+    top: 8px;
+    left: 8px;
+  }
+  .cert-corner.top-right {
+    top: 8px;
+    right: 8px;
+  }
+  .cert-corner.bottom-right {
+    bottom: 8px;
+    right: 8px;
+  }
+  .cert-corner.bottom-left {
+    bottom: 8px;
+    left: 8px;
   }
 }
 
