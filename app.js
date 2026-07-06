@@ -778,6 +778,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  // ==========================================
+  // 12. Legal Modals Handler
+  // ==========================================
+  const legalModal = document.getElementById('legalModal');
+  const closeLegalModalBtn = document.getElementById('closeLegalModal');
+  const legalLinks = document.querySelectorAll('.legal-link');
+  const legalTabBtns = document.querySelectorAll('[data-legal]');
+  const legalPanels = document.querySelectorAll('[id^="legal-panel-"]');
+
+  const openLegalModal = (tabName) => {
+    if (!legalModal) return;
+    legalModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Switch tab active states
+    legalTabBtns.forEach(btn => {
+      if (btn.getAttribute('data-legal') === tabName) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Switch panels active states
+    legalPanels.forEach(panel => {
+      if (panel.id === `legal-panel-${tabName}`) {
+        panel.classList.add('active');
+      } else {
+        panel.classList.remove('active');
+      }
+    });
+  };
+
+  const closeLegalModal = () => {
+    if (legalModal) {
+      legalModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  };
+
+  // Wire up footer links to open corresponding tabs
+  legalLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const text = link.textContent.trim();
+      let tabName = 'terms';
+      if (text === '개인정보처리방침') {
+        tabName = 'privacy';
+      } else if (text === '이메일무단수집거부') {
+        tabName = 'email';
+      }
+      openLegalModal(tabName);
+    });
+  });
+
+  if (closeLegalModalBtn) {
+    closeLegalModalBtn.addEventListener('click', closeLegalModal);
+  }
+
+  // Tab switching inside Legal Modal
+  legalTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabName = btn.getAttribute('data-legal');
+      legalTabBtns.forEach(b => b.classList.remove('active'));
+      legalPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const targetPanel = document.getElementById(`legal-panel-${tabName}`);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+    });
+  });
+
+  if (legalModal) {
+    legalModal.addEventListener('click', (e) => {
+      if (e.target === legalModal) {
+        closeLegalModal();
+      }
+    });
+  }
+
   initPromoModal();
 
   window.addEventListener('load', () => {
