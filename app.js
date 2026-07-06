@@ -566,10 +566,206 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ==========================================
+  // 11. Promotion Popup Modal with Slider
+  // ==========================================
+  const promoModal = document.getElementById('promoModal');
+  const promoCarousel = document.getElementById('promoCarousel');
+  const promoPrevBtn = document.getElementById('promoPrevBtn');
+  const promoNextBtn = document.getElementById('promoNextBtn');
+  const promoCloseBtn = document.getElementById('closePromoModalBtn');
+  const promoTopCloseBtn = document.getElementById('promoTopCloseBtn');
+  const dontShow7DaysCheckbox = document.getElementById('dontShow7DaysCheckbox');
+  const promoDotsContainer = document.getElementById('promoDots');
+  const promoDots = document.querySelectorAll('.promo-dot');
+  const promoBadge = document.getElementById('promoBadge');
+  const promoSlide1 = document.getElementById('promoSlide1');
+  const promoSlide2 = document.getElementById('promoSlide2');
+
+  let activeSlides = [0, 1]; // Indices of slides currently shown
+  let currentPromoSlide = 0; // Relative index in activeSlides list (0 or 1)
+
+  // Check if a specific slide is blocked
+  const isSlideBlocked = (slideNum) => {
+    const expiry = localStorage.getItem(`dontShowPromo${slideNum}Until`);
+    if (expiry) {
+      const now = new Date().getTime();
+      return now < parseInt(expiry, 10);
+    }
+    return false;
+  };
+
+  // Initial check
+  const initPromoModal = () => {
+    if (!promoModal) return;
+
+    const block1 = isSlideBlocked(1);
+    const block2 = isSlideBlocked(2);
+
+    if (block1 && block2) {
+      activeSlides = [];
+      return;
+    }
+
+    if (block1) {
+      activeSlides = [1];
+      if (promoSlide1) promoSlide1.classList.add('closed');
+      currentPromoSlide = 0;
+      adjustCarouselToSingleSlide(promoSlide2);
+    } else if (block2) {
+      activeSlides = [0];
+      if (promoSlide2) promoSlide2.classList.add('closed');
+      currentPromoSlide = 0;
+      adjustCarouselToSingleSlide(promoSlide1);
+    } else {
+      activeSlides = [0, 1];
+      currentPromoSlide = 0;
+    }
+
+    updatePromoIndicators();
+  };
+
+  const adjustCarouselToSingleSlide = (slideEl) => {
+    if (promoCarousel) {
+      promoCarousel.style.width = '100%';
+      promoCarousel.style.transform = 'translateX(0)';
+    }
+    if (slideEl) {
+      slideEl.style.width = '100%';
+    }
+    if (promoPrevBtn) promoPrevBtn.style.display = 'none';
+    if (promoNextBtn) promoNextBtn.style.display = 'none';
+    if (promoDotsContainer) promoDotsContainer.style.display = 'none';
+    if (promoBadge) promoBadge.style.display = 'none';
+  };
+
+  const updatePromoIndicators = () => {
+    if (activeSlides.length <= 1) {
+      if (promoBadge) promoBadge.style.display = 'none';
+      if (promoDotsContainer) promoDotsContainer.style.display = 'none';
+      if (promoPrevBtn) promoPrevBtn.style.display = 'none';
+      if (promoNextBtn) promoNextBtn.style.display = 'none';
+      return;
+    }
+
+    if (promoBadge) {
+      promoBadge.style.display = 'block';
+      promoBadge.textContent = `${currentPromoSlide + 1} / ${activeSlides.length}`;
+    }
+
+    promoDots.forEach((dot, index) => {
+      if (index === currentPromoSlide) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  };
+
+  const showPromoModal = () => {
+    if (promoModal && activeSlides.length > 0) {
+      promoModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const closeCurrentSlideOnly = () => {
+    if (activeSlides.length === 0) return;
+
+    const currentSlideNum = activeSlides[currentPromoSlide] + 1; // 1 or 2
+
+    // Save 7-day setting if checked
+    if (dontShow7DaysCheckbox && dontShow7DaysCheckbox.checked) {
+      const expiryDate = new Date().getTime() + 7 * 24 * 60 * 60 * 1000;
+      localStorage.setItem(`dontShowPromo${currentSlideNum}Until`, expiryDate.toString());
+    }
+
+    // Uncheck for next slide
+    if (dontShow7DaysCheckbox) dontShow7DaysCheckbox.checked = false;
+
+    if (activeSlides.length === 2) {
+      const slideToClose = activeSlides[currentPromoSlide];
+      const slideToKeep = activeSlides[1 - currentPromoSlide];
+
+      const closeEl = slideToClose === 0 ? promoSlide1 : promoSlide2;
+      const keepEl = slideToKeep === 0 ? promoSlide1 : promoSlide2;
+
+      if (closeEl) closeEl.classList.add('closed');
+
+      activeSlides = [slideToKeep];
+      currentPromoSlide = 0;
+
+      adjustCarouselToSingleSlide(keepEl);
+      updatePromoIndicators();
+    } else {
+      activeSlides = [];
+      if (promoModal) promoModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  };
+
+  const updatePromoCarousel = () => {
+    if (activeSlides.length > 1 && promoCarousel) {
+      promoCarousel.style.transform = `translateX(-${currentPromoSlide * 50}%)`;
+    }
+    updatePromoIndicators();
+  };
+
+  const nextPromoSlide = () => {
+    if (activeSlides.length > 1) {
+      currentPromoSlide = (currentPromoSlide + 1) % activeSlides.length;
+      updatePromoCarousel();
+    }
+  };
+
+  const prevPromoSlide = () => {
+    if (activeSlides.length > 1) {
+      currentPromoSlide = (currentPromoSlide - 1 + activeSlides.length) % activeSlides.length;
+      updatePromoCarousel();
+    }
+  };
+
+  if (promoPrevBtn && promoNextBtn) {
+    promoPrevBtn.addEventListener('click', prevPromoSlide);
+    promoNextBtn.addEventListener('click', nextPromoSlide);
+  }
+
+  if (promoCloseBtn) {
+    promoCloseBtn.addEventListener('click', closeCurrentSlideOnly);
+  }
+
+  if (promoTopCloseBtn) {
+    promoTopCloseBtn.addEventListener('click', closeCurrentSlideOnly);
+  }
+
+  promoDots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      if (activeSlides.length > 1) {
+        const slideIndex = parseInt(e.target.getAttribute('data-slide'), 10);
+        currentPromoSlide = slideIndex;
+        updatePromoCarousel();
+      }
+    });
+  });
+
+  if (promoModal) {
+    promoModal.addEventListener('click', (e) => {
+      if (e.target === promoModal) {
+        if (promoModal) promoModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  initPromoModal();
+
   window.addEventListener('load', () => {
     setTimeout(scrollToMiddlePlan, 150);
+    setTimeout(showPromoModal, 800);
   });
 
   window.addEventListener('resize', scrollToMiddlePlan);
 
+
 });
+
