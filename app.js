@@ -748,14 +748,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  if (promoModal) {
-    promoModal.addEventListener('click', (e) => {
-      if (e.target === promoModal) {
-        if (promoModal) promoModal.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
-  }
+
 
   initPromoModal();
 
