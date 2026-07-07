@@ -194,6 +194,27 @@ h1, h2, h3, h4 {
   align-items: center;
 }
 
+.logo-image {
+  height: 38px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  transition: filter var(--transition-normal);
+  filter: brightness(0) invert(1);
+  margin-top: 5px;
+}
+
+.site-header.scrolled .logo-image {
+  filter: none;
+}
+
+@media (max-width: 768px) {
+  .logo-image {
+    height: 28px;
+    margin-top: 4px;
+  }
+}
+
 .logo-link span {
   font-weight: 300;
   letter-spacing: 0.03em;
@@ -1574,6 +1595,19 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
+}
+
+.footer-logo-link {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.footer-logo-image {
+  height: 36px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
 .footer-logo span {
@@ -3012,6 +3046,13 @@ h1, h2, h3, h4 {
   z-index: 2;
 }
 
+.cert-logo-image {
+  height: 32px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
 .cert-logo-mark {
   margin-bottom: 8px;
 }
@@ -3391,6 +3432,87 @@ h1, h2, h3, h4 {
   .promo-modal-container {
     width: 310px;
   }
+}
+
+/* Privacy Agreement Styles */
+.form-privacy-wrap {
+  margin: 15px 0 20px;
+  text-align: left;
+  width: 100%;
+}
+
+.privacy-detail-box {
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 10px;
+  max-height: 80px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.consultation-section .privacy-detail-box {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text-light-muted);
+}
+
+.privacy-detail-box::-webkit-scrollbar {
+  width: 4px;
+}
+
+.privacy-detail-box::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.consultation-section .privacy-detail-box::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.privacy-detail-box strong {
+  display: block;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.consultation-section .privacy-detail-box strong {
+  color: var(--color-text-light);
+}
+
+.privacy-detail-box ul {
+  padding-left: 12px;
+  margin: 0;
+}
+
+.privacy-detail-box li {
+  list-style-type: disc;
+}
+
+.privacy-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.consultation-section .privacy-checkbox-label {
+  color: var(--color-text-light);
+}
+
+.privacy-checkbox-label input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--color-gold);
+  cursor: pointer;
+  margin: 0;
 }
 
 
