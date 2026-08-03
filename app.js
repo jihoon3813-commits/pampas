@@ -345,6 +345,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Open Service Detail Modal with a specific tab
+  const openTabInModal = (tabName) => {
+    if (serviceDetailModal) {
+      serviceDetailModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Find the tab button with the matching data-tab
+      const targetBtn = Array.from(serviceTabBtns).find(btn => btn.getAttribute('data-tab') === tabName);
+      if (targetBtn) {
+        // Trigger tab switch
+        targetBtn.click();
+      }
+    }
+  };
+
+  // Add click listeners to any elements with data-open-service-tab
+  document.querySelectorAll('[data-open-service-tab]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabName = el.getAttribute('data-open-service-tab');
+      openTabInModal(tabName);
+    });
+  });
+
   // Close Service Detail Modal
   if (closeServiceDetailBtn && serviceDetailModal) {
     closeServiceDetailBtn.addEventListener('click', () => {
