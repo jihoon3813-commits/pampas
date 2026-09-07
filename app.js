@@ -601,13 +601,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const promoTopCloseBtn = document.getElementById('promoTopCloseBtn');
   const dontShow7DaysCheckbox = document.getElementById('dontShow7DaysCheckbox');
   const promoDotsContainer = document.getElementById('promoDots');
-  const promoDots = document.querySelectorAll('.promo-dot');
   const promoBadge = document.getElementById('promoBadge');
-  const promoSlide1 = document.getElementById('promoSlide1');
-  const promoSlide2 = document.getElementById('promoSlide2');
 
-  let activeSlides = [0, 1]; // Indices of slides currently shown
-  let currentPromoSlide = 0; // Relative index in activeSlides list (0 or 1)
+  const allPromoSlideEls = document.querySelectorAll('.promo-slide');
+  let activeSlideIndices = []; // Indices of visible slides
+  let currentPromoSlide = 0;
 
   // Check if a specific slide is blocked
   const isSlideBlocked = (slideNum) => {
@@ -621,50 +619,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial check
   const initPromoModal = () => {
-    if (!promoModal) return;
+    if (!promoModal || !promoCarousel) return;
 
-    const block1 = isSlideBlocked(1);
-    const block2 = isSlideBlocked(2);
+    activeSlideIndices = [];
+    allPromoSlideEls.forEach((slide, idx) => {
+      const slideNum = idx + 1;
+      if (isSlideBlocked(slideNum)) {
+        slide.classList.add('closed');
+      } else {
+        slide.classList.remove('closed');
+        activeSlideIndices.push(idx);
+      }
+    });
 
-    if (block1 && block2) {
-      activeSlides = [];
+    if (activeSlideIndices.length === 0) {
+      if (promoModal) promoModal.classList.remove('active');
       return;
     }
 
-    if (block1) {
-      activeSlides = [1];
-      if (promoSlide1) promoSlide1.classList.add('closed');
-      currentPromoSlide = 0;
-      adjustCarouselToSingleSlide(promoSlide2);
-    } else if (block2) {
-      activeSlides = [0];
-      if (promoSlide2) promoSlide2.classList.add('closed');
-      currentPromoSlide = 0;
-      adjustCarouselToSingleSlide(promoSlide1);
-    } else {
-      activeSlides = [0, 1];
-      currentPromoSlide = 0;
-    }
-
-    updatePromoIndicators();
-  };
-
-  const adjustCarouselToSingleSlide = (slideEl) => {
-    if (promoCarousel) {
-      promoCarousel.style.width = '100%';
-      promoCarousel.style.transform = 'translateX(0)';
-    }
-    if (slideEl) {
-      slideEl.style.width = '100%';
-    }
-    if (promoPrevBtn) promoPrevBtn.style.display = 'none';
-    if (promoNextBtn) promoNextBtn.style.display = 'none';
-    if (promoDotsContainer) promoDotsContainer.style.display = 'none';
-    if (promoBadge) promoBadge.style.display = 'none';
+    currentPromoSlide = 0;
+    updatePromoCarousel();
   };
 
   const updatePromoIndicators = () => {
-    if (activeSlides.length <= 1) {
+    if (activeSlideIndices.length <= 1) {
       if (promoBadge) promoBadge.style.display = 'none';
       if (promoDotsContainer) promoDotsContainer.style.display = 'none';
       if (promoPrevBtn) promoPrevBtn.style.display = 'none';
@@ -674,77 +652,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (promoBadge) {
       promoBadge.style.display = 'block';
-      promoBadge.textContent = `${currentPromoSlide + 1} / ${activeSlides.length}`;
+      promoBadge.textContent = `${currentPromoSlide + 1} / ${activeSlideIndices.length}`;
     }
+    if (promoDotsContainer) promoDotsContainer.style.display = 'flex';
+    if (promoPrevBtn) promoPrevBtn.style.display = 'flex';
+    if (promoNextBtn) promoNextBtn.style.display = 'flex';
 
-    promoDots.forEach((dot, index) => {
-      if (index === currentPromoSlide) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
-    });
+    // Rebuild or sync dots
+    if (promoDotsContainer) {
+      promoDotsContainer.innerHTML = '';
+      activeSlideIndices.forEach((_, idx) => {
+        const dot = document.createElement('span');
+        dot.className = `promo-dot ${idx === currentPromoSlide ? 'active' : ''}`;
+        dot.setAttribute('data-slide', idx);
+        dot.addEventListener('click', () => {
+          currentPromoSlide = idx;
+          updatePromoCarousel();
+        });
+        promoDotsContainer.appendChild(dot);
+      });
+    }
   };
 
   const showPromoModal = () => {
-    if (promoModal && activeSlides.length > 0) {
+    if (promoModal && activeSlideIndices.length > 0) {
       promoModal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
   };
 
-  const closeCurrentSlideOnly = () => {
-    if (activeSlides.length === 0) return;
+  const updatePromoCarousel = () => {
+    if (!promoCarousel) return;
+    const count = activeSlideIndices.length;
+    if (count === 0) return;
 
-    const currentSlideNum = activeSlides[currentPromoSlide] + 1; // 1 or 2
+    // Arrange visible slides in flex order
+    activeSlideIndices.forEach((origIdx, activePos) => {
+      const el = allPromoSlideEls[origIdx];
+      if (el) el.style.order = activePos;
+    });
+
+    const activeIndex = activeSlideIndices[currentPromoSlide];
+    // Translate based on active position
+    promoCarousel.style.transform = `translateX(-${currentPromoSlide * 100}%)`;
+    updatePromoIndicators();
+  };
+
+  const closeCurrentSlideOnly = () => {
+    if (activeSlideIndices.length === 0) return;
+
+    const origSlideIdx = activeSlideIndices[currentPromoSlide];
+    const slideNum = origSlideIdx + 1;
 
     // Save 7-day setting if checked
     if (dontShow7DaysCheckbox && dontShow7DaysCheckbox.checked) {
       const expiryDate = new Date().getTime() + 7 * 24 * 60 * 60 * 1000;
-      localStorage.setItem(`dontShowPromo${currentSlideNum}Until`, expiryDate.toString());
+      localStorage.setItem(`dontShowPromo${slideNum}Until`, expiryDate.toString());
     }
 
-    // Uncheck for next slide
     if (dontShow7DaysCheckbox) dontShow7DaysCheckbox.checked = false;
 
-    if (activeSlides.length === 2) {
-      const slideToClose = activeSlides[currentPromoSlide];
-      const slideToKeep = activeSlides[1 - currentPromoSlide];
+    // Close this slide element
+    const elToClose = allPromoSlideEls[origSlideIdx];
+    if (elToClose) elToClose.classList.add('closed');
 
-      const closeEl = slideToClose === 0 ? promoSlide1 : promoSlide2;
-      const keepEl = slideToKeep === 0 ? promoSlide1 : promoSlide2;
+    // Remove from active list
+    activeSlideIndices.splice(currentPromoSlide, 1);
 
-      if (closeEl) closeEl.classList.add('closed');
-
-      activeSlides = [slideToKeep];
-      currentPromoSlide = 0;
-
-      adjustCarouselToSingleSlide(keepEl);
-      updatePromoIndicators();
-    } else {
-      activeSlides = [];
+    if (activeSlideIndices.length === 0) {
       if (promoModal) promoModal.classList.remove('active');
       document.body.style.overflow = '';
+    } else {
+      if (currentPromoSlide >= activeSlideIndices.length) {
+        currentPromoSlide = activeSlideIndices.length - 1;
+      }
+      updatePromoCarousel();
     }
-  };
-
-  const updatePromoCarousel = () => {
-    if (activeSlides.length > 1 && promoCarousel) {
-      promoCarousel.style.transform = `translateX(-${currentPromoSlide * 50}%)`;
-    }
-    updatePromoIndicators();
   };
 
   const nextPromoSlide = () => {
-    if (activeSlides.length > 1) {
-      currentPromoSlide = (currentPromoSlide + 1) % activeSlides.length;
+    if (activeSlideIndices.length > 1) {
+      currentPromoSlide = (currentPromoSlide + 1) % activeSlideIndices.length;
       updatePromoCarousel();
     }
   };
 
   const prevPromoSlide = () => {
-    if (activeSlides.length > 1) {
-      currentPromoSlide = (currentPromoSlide - 1 + activeSlides.length) % activeSlides.length;
+    if (activeSlideIndices.length > 1) {
+      currentPromoSlide = (currentPromoSlide - 1 + activeSlideIndices.length) % activeSlideIndices.length;
       updatePromoCarousel();
     }
   };
@@ -761,16 +756,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (promoTopCloseBtn) {
     promoTopCloseBtn.addEventListener('click', closeCurrentSlideOnly);
   }
-
-  promoDots.forEach(dot => {
-    dot.addEventListener('click', (e) => {
-      if (activeSlides.length > 1) {
-        const slideIndex = parseInt(e.target.getAttribute('data-slide'), 10);
-        currentPromoSlide = slideIndex;
-        updatePromoCarousel();
-      }
-    });
-  });
 
 
 
