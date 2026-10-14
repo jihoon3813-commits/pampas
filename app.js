@@ -100,6 +100,351 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
+  // Phone Number Auto-Hyphenation Utility
+  // (010 휴대폰, 02 서울, 지역번호, 1588/1661 등 대표번호 완벽 지원)
+  // ==========================================
+  const formatPhoneNumber = (val) => {
+    if (!val) return '';
+    const num = val.toString().replace(/[^0-9]/g, '');
+
+    // 15xx, 16xx, 18xx 등 8자리 공식/대표번호 (XXXX-XXXX)
+    if (/^(15|16|18)[0-9]{2}/.test(num)) {
+      if (num.length <= 4) return num;
+      return `${num.slice(0, 4)}-${num.slice(4, 8)}`;
+    }
+
+    // 02 서울 지역번호 (9~10자리: 02-XXX-XXXX, 02-XXXX-XXXX)
+    if (num.startsWith('02')) {
+      if (num.length <= 2) return num;
+      if (num.length <= 5) return `${num.slice(0, 2)}-${num.slice(2)}`;
+      if (num.length <= 9) return `${num.slice(0, 2)}-${num.slice(2, 5)}-${num.slice(5, 9)}`;
+      return `${num.slice(0, 2)}-${num.slice(2, 6)}-${num.slice(6, 10)}`;
+    }
+
+    // 050x 안심번호 (11~12자리: 050x-XXX-XXXX, 050x-XXXX-XXXX)
+    if (num.startsWith('050')) {
+      if (num.length <= 4) return num;
+      if (num.length <= 7) return `${num.slice(0, 4)}-${num.slice(4)}`;
+      if (num.length <= 11) return `${num.slice(0, 4)}-${num.slice(4, 7)}-${num.slice(7, 11)}`;
+      return `${num.slice(0, 4)}-${num.slice(4, 8)}-${num.slice(8, 12)}`;
+    }
+
+    // 일반 3자리 국번 (010, 011, 031, 032, 033, 041, 042, 043, 051, 052, 053, 054, 055, 061, 062, 063, 064, 070 등)
+    if (num.length <= 3) return num;
+    if (num.length <= 6) return `${num.slice(0, 3)}-${num.slice(3)}`;
+    if (num.length <= 10) return `${num.slice(0, 3)}-${num.slice(3, 6)}-${num.slice(6, 10)}`;
+    return `${num.slice(0, 3)}-${num.slice(3, 7)}-${num.slice(7, 11)}`;
+  };
+
+  const applyPhoneInputMask = (input) => {
+    if (!input) return;
+    input.setAttribute('type', 'tel');
+    input.setAttribute('inputmode', 'numeric');
+    input.setAttribute('pattern', '[0-9]*');
+    input.setAttribute('maxlength', '14');
+    input.addEventListener('input', (e) => {
+      e.target.value = formatPhoneNumber(e.target.value);
+    });
+  };
+
+  // ==========================================
+  // Member Authentication & State Management
+  // ==========================================
+  const AUTH_STORAGE_KEY = 'hdone_auth_user';
+
+  const getAuthUser = () => {
+    try {
+      const data = localStorage.getItem(AUTH_STORAGE_KEY);
+      return data ? JSON.parse(data) : null;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const setAuthUser = (user) => {
+    try {
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+    } catch (e) {
+      console.error('Error saving user to localStorage:', e);
+    }
+  };
+
+  const clearAuthUser = () => {
+    try {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+    } catch (e) {
+      console.error('Error clearing user from localStorage:', e);
+    }
+  };
+
+  const isLoggedIn = () => {
+    return !!getAuthUser();
+  };
+
+  const updateAuthUI = () => {
+    const user = getAuthUser();
+    const isMember = !!user;
+
+    const headerLoginBtn = document.getElementById('headerLoginBtn');
+    const headerUserBadge = document.getElementById('headerUserBadge');
+    const headerUserName = document.getElementById('headerUserName');
+
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    const mobileUserBadge = document.getElementById('mobileUserBadge');
+    const mobileUserName = document.getElementById('mobileUserName');
+
+    if (isMember) {
+      document.body.classList.remove('is-guest');
+      document.body.classList.add('is-member');
+
+      if (headerLoginBtn) headerLoginBtn.style.display = 'none';
+      if (headerUserBadge) headerUserBadge.style.display = 'flex';
+      if (headerUserName) headerUserName.textContent = `${user.name}님`;
+
+      if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+      if (mobileUserBadge) mobileUserBadge.style.display = 'flex';
+      if (mobileUserName) mobileUserName.textContent = `${user.name}님 환영합니다`;
+    } else {
+      document.body.classList.add('is-guest');
+      document.body.classList.remove('is-member');
+
+      if (headerLoginBtn) headerLoginBtn.style.display = 'inline-block';
+      if (headerUserBadge) headerUserBadge.style.display = 'none';
+
+      if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+      if (mobileUserBadge) mobileUserBadge.style.display = 'none';
+    }
+  };
+
+  // Auth Modal Elements & Controls
+  const authModal = document.getElementById('authModal');
+  const closeAuthModalBtn = document.getElementById('closeAuthModal');
+  const tabLoginBtn = document.getElementById('tabLoginBtn');
+  const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+  const authPanelLogin = document.getElementById('authPanelLogin');
+  const authPanelRegister = document.getElementById('authPanelRegister');
+  const authModalTitle = document.getElementById('authModalTitle');
+  const authModalDesc = document.getElementById('authModalDesc');
+  const switchToRegisterBtn = document.getElementById('switchToRegisterBtn');
+  const switchToLoginBtn = document.getElementById('switchToLoginBtn');
+
+  const switchAuthTab = (tab) => {
+    if (tab === 'register') {
+      if (tabRegisterBtn) tabRegisterBtn.classList.add('active');
+      if (tabLoginBtn) tabLoginBtn.classList.remove('active');
+      if (authPanelRegister) authPanelRegister.classList.add('active');
+      if (authPanelLogin) authPanelLogin.classList.remove('active');
+      if (authModalTitle) authModalTitle.textContent = 'HDONE 신규 회원가입';
+      if (authModalDesc) authModalDesc.textContent = '회원가입 후 HDONE의 모든 프리미엄 라이프 혜택을 이용해 보세요.';
+    } else {
+      if (tabLoginBtn) tabLoginBtn.classList.add('active');
+      if (tabRegisterBtn) tabRegisterBtn.classList.remove('active');
+      if (authPanelLogin) authPanelLogin.classList.add('active');
+      if (authPanelRegister) authPanelRegister.classList.remove('active');
+      if (authModalTitle) authModalTitle.textContent = 'HDONE 멤버십 로그인';
+      if (authModalDesc) authModalDesc.textContent = '로그인 후 모든 라이프 혜택과 멤버십 서비스를 이용하실 수 있습니다.';
+    }
+  };
+
+  const openAuthModal = (tab = 'login', noticeMessage = '') => {
+    if (!authModal) return;
+    switchAuthTab(tab);
+    if (noticeMessage && authModalDesc) {
+      authModalDesc.textContent = noticeMessage;
+    }
+    authModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeAuthModal = () => {
+    if (!authModal) return;
+    authModal.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  if (closeAuthModalBtn) {
+    closeAuthModalBtn.addEventListener('click', closeAuthModal);
+  }
+  if (authModal) {
+    authModal.addEventListener('click', (e) => {
+      if (e.target === authModal) closeAuthModal();
+    });
+  }
+  if (tabLoginBtn) tabLoginBtn.addEventListener('click', () => switchAuthTab('login'));
+  if (tabRegisterBtn) tabRegisterBtn.addEventListener('click', () => switchAuthTab('register'));
+  if (switchToRegisterBtn) switchToRegisterBtn.addEventListener('click', () => switchAuthTab('register'));
+  if (switchToLoginBtn) switchToLoginBtn.addEventListener('click', () => switchAuthTab('login'));
+
+  // Header login/logout button events
+  const headerLoginBtn = document.getElementById('headerLoginBtn');
+  const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+  const headerLogoutBtn = document.getElementById('headerLogoutBtn');
+  const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+
+  if (headerLoginBtn) headerLoginBtn.addEventListener('click', () => openAuthModal('login'));
+  if (mobileLoginBtn) {
+    mobileLoginBtn.addEventListener('click', () => {
+      if (navMenu) navMenu.classList.remove('open');
+      if (menuToggle) menuToggle.classList.remove('open');
+      openAuthModal('login');
+    });
+  }
+
+  const handleLogout = () => {
+    clearAuthUser();
+    updateAuthUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showCustomAlert('로그아웃 완료', '<p>안전하게 로그아웃되었습니다.</p>');
+  };
+
+  if (headerLogoutBtn) headerLogoutBtn.addEventListener('click', handleLogout);
+  if (mobileLogoutBtn) {
+    mobileLogoutBtn.addEventListener('click', () => {
+      if (navMenu) navMenu.classList.remove('open');
+      if (menuToggle) menuToggle.classList.remove('open');
+      handleLogout();
+    });
+  }
+
+  // Daum Postcode Address Search
+  const btnSearchAddress = document.getElementById('btnSearchAddress');
+  if (btnSearchAddress) {
+    btnSearchAddress.addEventListener('click', () => {
+      if (typeof daum === 'undefined' || !daum.Postcode) {
+        showCustomAlert('주소 검색 안내', '<p>우편번호 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.</p>');
+        return;
+      }
+      new daum.Postcode({
+        oncomplete: function(data) {
+          let fullAddr = data.address;
+          let extraAddr = '';
+
+          if (data.addressType === 'R') {
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+              extraAddr += data.bname;
+            }
+            if (data.buildingName !== '') {
+              extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            // "주소 검색은 괄호안에 주소 모두 보이게하고"
+            if (extraAddr !== '') {
+              fullAddr += ` (${extraAddr})`;
+            }
+          }
+
+          const regZipcode = document.getElementById('regZipcode');
+          const regAddress = document.getElementById('regAddress');
+          const regDetailAddress = document.getElementById('regDetailAddress');
+
+          if (regZipcode) regZipcode.value = data.zonecode;
+          if (regAddress) regAddress.value = fullAddr;
+          if (regDetailAddress) regDetailAddress.focus();
+        }
+      }).open();
+    });
+  }
+
+  // Handle Login Form Submit
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      const submitBtn = document.getElementById('submitLoginBtn');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = '로그인 중...';
+
+      try {
+        const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
+          || 'https://modest-gnat-340.convex.site';
+        const res = await fetch(`${CONVEX_SITE_URL}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          setAuthUser(data.user);
+          updateAuthUI();
+          closeAuthModal();
+          loginForm.reset();
+          showCustomAlert('로그인 성공', `<p><strong>${escapeHtml(data.user.name)}</strong>님, 환영합니다!<br>HDONE의 모든 멤버십 혜택과 서비스를 자유롭게 이용하실 수 있습니다.</p>`);
+        } else {
+          showCustomAlert('로그인 실패', `<p>${escapeHtml(data.message || '이메일 또는 비밀번호가 올바르지 않습니다.')}</p>`);
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        showCustomAlert('통신 오류', '<p>로그인 서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.</p>');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+  }
+
+  // Handle Register Form Submit
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const passwordConfirm = document.getElementById('regPasswordConfirm').value;
+      const phone = document.getElementById('regPhone').value.trim();
+      const zipcode = document.getElementById('regZipcode') ? document.getElementById('regZipcode').value.trim() : '';
+      const address = document.getElementById('regAddress') ? document.getElementById('regAddress').value.trim() : '';
+      const detailAddress = document.getElementById('regDetailAddress') ? document.getElementById('regDetailAddress').value.trim() : '';
+
+      if (password.length < 6) {
+        showCustomAlert('비밀번호 오류', '<p>비밀번호는 최소 6자 이상으로 설정해 주세요.</p>');
+        return;
+      }
+      if (password !== passwordConfirm) {
+        showCustomAlert('비밀번호 불일치', '<p>입력하신 비밀번호와 비밀번호 확인이 일치하지 않습니다.</p>');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitRegisterBtn');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = '가입 진행 중...';
+
+      try {
+        const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
+          || 'https://modest-gnat-340.convex.site';
+        const res = await fetch(`${CONVEX_SITE_URL}/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, name, phone, zipcode, address, detailAddress })
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          setAuthUser(data.user);
+          updateAuthUI();
+          closeAuthModal();
+          registerForm.reset();
+          showCustomAlert('회원가입 완료', `<p><strong>${escapeHtml(data.user.name)}</strong>님의 회원가입이 성공적으로 완료되었습니다.<br>HDONE 프리미엄 멤버십에 오신 것을 진심으로 환영합니다!</p>`);
+        } else {
+          showCustomAlert('회원가입 실패', `<p>${escapeHtml(data.message || '회원가입 처리 중 오류가 발생했습니다.')}</p>`);
+        }
+      } catch (err) {
+        console.error('Register error:', err);
+        showCustomAlert('통신 오류', '<p>회원가입 서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.</p>');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+  }
+
+  // Initialize Auth state on startup
+  updateAuthUI();
+
+  // ==========================================
   // 0. Header Scroll Effect
   // ==========================================
   const header = document.getElementById('header');
@@ -114,23 +459,33 @@ document.addEventListener('DOMContentLoaded', () => {
   handleScrollHeader(); // Initialize once on load
 
   // ==========================================
-  // 1. Mobile Menu Toggle
+  // 1. Mobile Menu Toggle & Protected Menu Navigation
   // ==========================================
   const menuToggle = document.getElementById('menuToggle');
   const navMenu = document.getElementById('navMenu');
   const navLinks = document.querySelectorAll('.nav-link');
 
-  menuToggle.addEventListener('click', () => {
-    const isOpen = navMenu.classList.toggle('open');
-    menuToggle.classList.toggle('open');
-    menuToggle.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
-  });
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      menuToggle.classList.toggle('open');
+      menuToggle.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+    });
+  }
 
-  // Close mobile menu when nav link is clicked
+  // Close mobile menu and verify authentication before entering menus
   navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      navMenu.classList.remove('open');
-      menuToggle.classList.remove('open');
+    link.addEventListener('click', (e) => {
+      if (!isLoggedIn()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (navMenu) navMenu.classList.remove('open');
+        if (menuToggle) menuToggle.classList.remove('open');
+        openAuthModal('login', '로그인 상태에서만 메뉴에 접속하실 수 있습니다. 먼저 로그인해 주세요.');
+        return;
+      }
+      if (navMenu) navMenu.classList.remove('open');
+      if (menuToggle) menuToggle.classList.remove('open');
     });
   });
 
@@ -215,9 +570,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const consultTime = document.getElementById('consultTime');
       const consultTimeText = consultTime.options[consultTime.selectedIndex].text;
 
-      const phoneRegex = /^[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}$|^[0-9]{9,11}$/;
-      if (!phoneRegex.test(userPhone.replace(/\s/g, ''))) {
-        alert('올바른 연락처 형식을 입력해주세요. (예: 010-1234-5678 또는 숫자만 입력)');
+      const cleanPhone = userPhone.replace(/[^0-9]/g, '');
+      if (cleanPhone.length < 7 || cleanPhone.length > 12) {
+        alert('올바른 연락처 번호를 입력해주세요.');
         return;
       }
 
@@ -286,6 +641,10 @@ document.addEventListener('DOMContentLoaded', () => {
   openConsultBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      if (!isLoggedIn()) {
+        openAuthModal('login', '로그인 후 상담 신청 및 서비스 이용이 가능합니다. 먼저 로그인해 주세요.');
+        return;
+      }
       if (consultModal) {
         consultModal.classList.add('active');
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
@@ -296,6 +655,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Open 1:1 Inquiry Modal
   if (openInquiryBtn && inquiryModal) {
     openInquiryBtn.addEventListener('click', () => {
+      if (!isLoggedIn()) {
+        openAuthModal('login', '로그인 후 1:1 문의가 가능합니다. 먼저 로그인해 주세요.');
+        return;
+      }
       inquiryModal.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
@@ -340,6 +703,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Open Service Detail Modal
   if (openServiceDetailBtn && serviceDetailModal) {
     openServiceDetailBtn.addEventListener('click', () => {
+      if (!isLoggedIn()) {
+        openAuthModal('login', '로그인 후 서비스 상세 내역을 확인하실 수 있습니다. 먼저 로그인해 주세요.');
+        return;
+      }
       serviceDetailModal.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
@@ -347,6 +714,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Open Service Detail Modal with a specific tab
   const openTabInModal = (tabName) => {
+    if (!isLoggedIn()) {
+      openAuthModal('login', '로그인 후 서비스 상세 내역을 확인하실 수 있습니다. 먼저 로그인해 주세요.');
+      return;
+    }
     if (serviceDetailModal) {
       serviceDetailModal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -405,34 +776,72 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Hero section action buttons click protection
+  const heroActionBtns = document.querySelectorAll('#hero .hero-actions a');
+  heroActionBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      if (!isLoggedIn()) {
+        e.preventDefault();
+        openAuthModal('login', '로그인 후 HDONE 멤버십 서비스를 이용하실 수 있습니다.');
+      }
+    });
+  });
+
+  // Member Lock Banner click handler
+  const memberLockBanner = document.getElementById('memberLockBanner');
+  if (memberLockBanner) {
+    memberLockBanner.querySelectorAll('.open-auth-modal').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const mode = btn.getAttribute('data-auth-mode') || 'login';
+        openAuthModal(mode);
+      });
+    });
+  }
+
+  // Protected Content Wrapper click handler (intercepts any clicks from non-logged-in users)
+  const protectedContentWrapper = document.getElementById('protectedContentWrapper');
+  if (protectedContentWrapper) {
+    protectedContentWrapper.addEventListener('click', (e) => {
+      if (!isLoggedIn()) {
+        e.preventDefault();
+        e.stopPropagation();
+        openAuthModal('login', '로그인 후 전체 서비스와 상세 혜택을 이용하실 수 있습니다.');
+      }
+    });
+  }
+
+  // Floating Action Buttons Protection
+  const floatingConsultBtn = document.querySelector('.floating-btn.btn-consult');
+  if (floatingConsultBtn) {
+    floatingConsultBtn.addEventListener('click', (e) => {
+      if (!isLoggedIn()) {
+        e.preventDefault();
+        e.stopPropagation();
+        openAuthModal('login', '로그인 후 상담 신청이 가능합니다.');
+      }
+    });
+  }
+  const floatingMallBtn = document.querySelector('.floating-btn.btn-mall');
+  if (floatingMallBtn) {
+    floatingMallBtn.addEventListener('click', (e) => {
+      if (!isLoggedIn()) {
+        e.preventDefault();
+        e.stopPropagation();
+        openAuthModal('login', '회원 전용 쇼핑몰은 로그인 후 이용 가능합니다.');
+      }
+    });
+  }
+
   // ==========================================
   // 7. Phone Input Auto-Hyphenation & Mobile Keyboard
+  // (010, 02 등 지역번호, 1588 등 공식대표번호 자동 하이픈)
   // ==========================================
-  const phoneInputs = [
-    document.getElementById('userPhone'),
-    document.getElementById('modalUserPhone'),
-    document.getElementById('inquiryPhone')
-  ];
-
-  phoneInputs.forEach(input => {
+  const phoneInputIds = ['userPhone', 'modalUserPhone', 'inquiryPhone', 'regPhone'];
+  phoneInputIds.forEach(id => {
+    const input = document.getElementById(id);
     if (input) {
-      input.addEventListener('input', (e) => {
-        const target = e.target;
-        let rawVal = target.value.replace(/[^0-9]/g, '');
-        let formattedVal = '';
-
-        if (rawVal.length < 4) {
-          formattedVal = rawVal;
-        } else if (rawVal.length < 7) {
-          formattedVal = `${rawVal.slice(0, 3)}-${rawVal.slice(3)}`;
-        } else if (rawVal.length < 11) {
-          formattedVal = `${rawVal.slice(0, 3)}-${rawVal.slice(3, 6)}-${rawVal.slice(6)}`;
-        } else {
-          formattedVal = `${rawVal.slice(0, 3)}-${rawVal.slice(3, 7)}-${rawVal.slice(7, 11)}`;
-        }
-        
-        target.value = formattedVal;
-      });
+      applyPhoneInputMask(input);
     }
   });
 
@@ -450,7 +859,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const consultTime = document.getElementById('modalConsultTime');
       const consultTimeText = consultTime.options[consultTime.selectedIndex].text;
 
-      if (userPhone.length < 12) {
+      const cleanPhone = userPhone.replace(/[^0-9]/g, '');
+      if (cleanPhone.length < 7 || cleanPhone.length > 12) {
         alert('올바른 연락처 번호를 입력해주세요.');
         return;
       }
@@ -482,7 +892,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const userPhone = document.getElementById('inquiryPhone').value.trim();
       const message = document.getElementById('inquiryMessage').value.trim();
 
-      if (userPhone.length < 12) {
+      const cleanInquiryPhone = userPhone.replace(/[^0-9]/g, '');
+      if (cleanInquiryPhone.length < 7 || cleanInquiryPhone.length > 12) {
         alert('올바른 연락처 번호를 입력해주세요.');
         return;
       }

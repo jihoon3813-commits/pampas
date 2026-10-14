@@ -32,7 +32,8 @@
   
   <!-- Hero Background Images Preload -->
   <link rel="preload" as="image" href="https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_1920/v1782996332/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_09_44_17_l9wtm1.png" media="(min-width: 769px)">
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dfkntvpmv/image/upload/f_auto,q_auto,w_800/v1783002881/ChatGPT_Image_2026%EB%85%84_7%EC%9B%94_2%EC%9D%BC_%EC%98%A4%ED%9B%84_11_34_21_c8y8db.png" media="(max-width: 768px)">
+  <!-- Daum Postcode Service -->
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 
@@ -60,6 +61,13 @@
           <li class="nav-item"><a href="#scenarios" class="nav-link">라이프서비스</a></li>
           <li class="nav-item"><a href="#plans" class="nav-link">이용가이드</a></li>
           <li class="nav-item"><a href="#trust" class="nav-link">고객센터</a></li>
+          <li class="nav-item mobile-auth-item" id="mobileAuthItem">
+            <button type="button" class="btn btn-gold-filled btn-full open-auth-modal" id="mobileLoginBtn" data-auth-mode="login">로그인 / 회원가입</button>
+            <div class="mobile-user-box" id="mobileUserBadge" style="display: none;">
+              <span id="mobileUserName">홍길동님 환영합니다</span>
+              <button type="button" class="btn btn-outline-white btn-full" id="mobileLogoutBtn" style="margin-top: 8px;">로그아웃</button>
+            </div>
+          </li>
         </ul>
       </nav>
       
@@ -69,6 +77,19 @@
           <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="margin-right: 6px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           1661-9266
         </a>
+        <div id="headerAuthContainer" class="header-auth-container">
+          <button type="button" class="btn-header-login open-auth-modal" id="headerLoginBtn" data-auth-mode="login">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            로그인 / 회원가입
+          </button>
+          <div class="user-profile-badge" id="headerUserBadge" style="display: none;">
+            <span class="user-greeting" id="headerUserName">회원님</span>
+            <button type="button" class="btn-logout" id="headerLogoutBtn">로그아웃</button>
+          </div>
+        </div>
         <a href="#apply" class="btn btn-dark-filled open-consult-modal">혜택 상담하기</a>
       </div>
     </div>
@@ -120,6 +141,37 @@
         </div>
       </div>
     </section>
+
+    <!-- Member Lock Banner (비로그인 시 표시되는 회원 전용 잠금 안내) -->
+    <section class="member-lock-banner" id="memberLockBanner">
+      <div class="container member-lock-container">
+        <div class="lock-card">
+          <div class="lock-icon-wrap">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <span class="lock-badge">HDONE MEMBERS ONLY</span>
+          <h2 class="lock-heading">HDONE 프리미엄 회원 전용 서비스입니다</h2>
+          <p class="lock-subtext">
+            HDONE의 모든 라이프 혜택, 제휴 서비스 및 상세 이용가이드는<br>
+            <strong>로그인 후</strong> 자유롭게 열람 및 이용하실 수 있습니다.
+          </p>
+          <div class="lock-btn-wrap">
+            <button type="button" class="btn btn-gold-filled open-auth-modal" data-auth-mode="login" style="padding: 14px 32px; font-weight: 700; font-size: 15px;">
+              로그인하여 전체 메뉴 보기
+            </button>
+            <button type="button" class="btn btn-outline-white open-auth-modal" data-auth-mode="register" style="padding: 14px 28px; font-size: 15px;">
+              신규 회원가입
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Protected Content Wrapper (로그인 시 전체 해제) -->
+    <div id="protectedContentWrapper" class="protected-content-wrapper">
 
     <!-- Certificate Announcement Section with Video Background -->
     <section class="cert-section" id="announcement">
@@ -674,7 +726,7 @@
                 </span>
               </div>
               <p class="comp-text-title">가족 합산 및 자유로운 공유</p>
-              <p class="comp-text-desc">회원 혜택 양도 및 패밀리 멤버십 세컨드 카드 공유가 편리하여 하나의 구좌로 높은 효용성을 보증합니다.</p>
+              <p class="comp-text-desc">회원 혜택 양도 및 패밀리 멤버십 세컨드 카드 공유가 편리하여 하나의 서비스 패키지로 높은 효용성을 보증합니다.</p>
             </div>
           </div>
         </div>
@@ -700,7 +752,7 @@
               </div>
               <div class="form-group">
                 <label for="userPhone">연락처</label>
-                <input type="tel" id="userPhone" name="userPhone" placeholder="휴대폰 번호를 입력해주세요 (ex. 010-0000-0000)" required>
+                <input type="tel" id="userPhone" name="userPhone" placeholder="휴대폰 번호를 입력해주세요 (ex. 010-0000-0000)" required inputmode="numeric" pattern="[0-9]*" maxlength="14" autocomplete="tel">
               </div>
             </div>
             
@@ -785,7 +837,7 @@
             <p class="trust-card-desc">가입 완료 시 전용 컨시어지 채널을 통해 즉시 예약이 가능하며, 다양한 혜택을 제한 없이 유연하게 활용합니다.</p>
           </div>
 
-          <!-- Pillar 3: 계약 안내 -->
+          <!-- Pillar 3: 가입 및 서비스 안내 -->
           <div class="trust-card">
             <div class="trust-icon-box">
               <svg viewBox="0 0 24 24" class="trust-icon">
@@ -793,8 +845,8 @@
                 <polyline points="14 2 14 8 20 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <h4 class="trust-card-title">계약 안내</h4>
-            <p class="trust-card-desc">공정거래위원회 표준약관을 철저히 준수하며 가입 즉시 보증보험 및 예치계약을 안전하게 체결합니다.</p>
+            <h4 class="trust-card-title">가입 및 서비스 안내</h4>
+            <p class="trust-card-desc">투명한 회원 이용약관과 소비자 보호 기준을 철저히 준수하며 안전하고 신뢰할 수 있는 멤버십 서비스를 제공합니다.</p>
           </div>
 
           <!-- Pillar 4: 혜택 안내 -->
@@ -828,22 +880,22 @@
             <!-- FAQ 1 -->
             <div class="faq-item-v2">
               <button class="faq-trigger-v2">
-                <span>Q. 상조 서비스와 라이프 멤버십은 어떻게 다른가요?</span>
+                <span>Q. HDONE 라이프 멤버십은 어떤 서비스인가요?</span>
                 <svg viewBox="0 0 24 24" class="faq-arrow-v2"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-panel-v2">
-                <p>기존 상조가 오직 장례에만 한정되어 먼 훗날 소비되는 단일 목적 상품이라면, HDONE 멤버십은 일상에서 즐기는 크루즈/여행, 특별한 날을 위한 웨딩, 소중한 반려동물을 위한 케어 등 인생 전반의 다채로운 혜택들을 가입 시점부터 상시 전환하여 이용할 수 있는 다목적 라이프스타일 솔루션입니다.</p>
+                <p>HDONE 멤버십은 일상에서 즐기는 크루즈/여행, 특별한 날을 위한 웨딩, 소중한 반려동물을 위한 케어 등 인생 전반의 다채로운 혜택들을 가입 시점부터 상시 전환하여 이용할 수 있는 다목적 라이프스타일 솔루션입니다. <strong>본 서비스는 프리미엄 멤버십 구독 서비스이며, 선불식 할부거래 상품이 아닙니다.</strong></p>
               </div>
             </div>
 
             <!-- FAQ 2 -->
             <div class="faq-item-v2">
               <button class="faq-trigger-v2">
-                <span>Q. 납입금은 안전하게 보증되나요? 계약 해지 시 환급 규정이 궁금합니다.</span>
+                <span>Q. 멤버십 구독료 관리는 어떻게 되나요? 멤버십 구독 해지 시 환불 규정이 궁금합니다.</span>
                 <svg viewBox="0 0 24 24" class="faq-arrow-v2"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-panel-v2">
-                <p>HDONE 멤버십의 모든 회원 납입금은 공정거래위원회 표준약관 및 관련 법률에 의거하여 안전하게 보증 예치 계약이 체결되며, 신뢰할 수 있는 외부 신탁기관과 금융사에 분리 예치되어 투명하게 보증됩니다. 또한 중도 해지 시에도 공정거래위원회 표준 약관 상의 해약 환급금 지급 비율을 투명하게 준수하여 환급 처리가 진행됩니다.</p>
+                <p>HDONE 멤버십의 모든 회원 서비스 비용 및 구독료는 관계 법령과 표준 소비자 보호 규정에 의거하여 안전하고 투명하게 관리됩니다. 또한 멤버십 구독 해지 시에도 공정거래위원회 소비자분쟁해결기준 및 회원 환불 규정을 투명하게 준수하여 환불 처리가 신속하게 진행됩니다. <strong>본 서비스는 프리미엄 멤버십 구독 서비스이며, 선불식 할부거래 상품이 아닙니다.</strong></p>
               </div>
             </div>
 
@@ -854,13 +906,15 @@
                 <svg viewBox="0 0 24 24" class="faq-arrow-v2"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <div class="faq-panel-v2">
-                <p>첫 온라인 상담 신청 단계에서는 별도의 서류 제출이 전혀 필요하지 않습니다. 성함과 연락처, 관심 분야만 간략히 작성하여 제출해 주시면, 전담 라이프스타일 큐레이터가 배정되어 개별 맞춤 상담을 상세하게 안내해 드립니다. 최종 계약 체결 시점의 가입 서류 및 절차도 전담 큐레이터가 1:1로 밀착 서포트해 드려 번거로움 없이 편안하게 준비하실 수 있습니다.</p>
+                <p>첫 온라인 상담 신청 단계에서는 별도의 서류 제출이 전혀 필요하지 않습니다. 성함과 연락처, 관심 분야만 간략히 작성하여 제출해 주시면, 전담 라이프스타일 큐레이터가 배정되어 개별 맞춤 상담을 상세하게 안내해 드립니다. 최종 프리미엄 멤버십 가입 시점의 구비 서류 및 가입 절차도 전담 큐레이터가 1:1로 밀착 서포트해 드려 번거로움 없이 편안하게 준비하실 수 있습니다.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    </div> <!-- /#protectedContentWrapper -->
 
   </main>
 
@@ -886,6 +940,10 @@
           <a href="#" class="legal-link bold">개인정보처리방침</a>
           <a href="#" class="legal-link">이메일무단수집거부</a>
         </p>
+      </div>
+
+      <div class="footer-disclaimer-box" style="padding: 14px 20px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-left: 3px solid #D4AF37; font-size: 13px; color: #E2E8F0; line-height: 1.6; border-radius: 4px;">
+        ※ 본 서비스는 프리미엄 멤버십 구독 서비스이며, 선불식 할부거래 상품이 아닙니다.
       </div>
 
       <div class="footer-copyright-row" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -949,7 +1007,7 @@
         </div>
         <div class="modal-form-group">
           <label for="modalUserPhone">연락처</label>
-          <input type="tel" id="modalUserPhone" name="userPhone" inputmode="numeric" placeholder="휴대폰 번호를 입력해주세요" required>
+          <input type="tel" id="modalUserPhone" name="userPhone" inputmode="numeric" pattern="[0-9]*" maxlength="14" placeholder="휴대폰 번호를 입력해주세요" required autocomplete="tel">
         </div>
         <div class="modal-form-group">
           <label for="modalInterestBenefit">관심 혜택 선택</label>
@@ -1008,7 +1066,7 @@
         </div>
         <div class="modal-form-group">
           <label for="inquiryPhone">연락처</label>
-          <input type="tel" id="inquiryPhone" inputmode="numeric" placeholder="휴대폰 번호를 입력해주세요" required>
+          <input type="tel" id="inquiryPhone" name="inquiryPhone" inputmode="numeric" pattern="[0-9]*" maxlength="14" placeholder="휴대폰 번호를 입력해주세요" required autocomplete="tel">
         </div>
         <div class="modal-form-group">
           <label for="inquiryMessage">문의 내용</label>
@@ -1282,7 +1340,7 @@
                 </tr>
                 <tr>
                   <td class="table-cat">장의차</td>
-                  <td class="table-desc">장의버스 또는 장의리무진 선택 1, 왕복 200km 무료 (2차 장지 추가요금 발생)</td>
+                  <td class="table-desc">장의버스 또는 장의리무진 선택 1, 왕복 200km 무료 (2차 경유 이동지 추가요금 발생)</td>
                 </tr>
 
                 <!-- 대여품 -->
@@ -1299,7 +1357,7 @@
             </table>
           </div>
           <p class="tab-panel-notice" style="font-size: 13px; color: var(--color-text-secondary); margin-top: 15px; line-height: 1.5; font-weight: 500;">
-            ※ 장례행사는 협력업체를 통해 24시간 접수, 장례식을 제공해 드립니다.
+            ※ 장례행사는 협력업체를 통해 24시간 접수, 장례식을 제공해 드립니다. <strong>본 서비스는 프리미엄 멤버십 구독 서비스이며, 선불식 할부거래 상품이 아닙니다.</strong>
           </p>
         </div>
 
@@ -1332,7 +1390,7 @@
                 </tr>
                 <tr>
                   <td class="table-cat">제휴 혜택</td>
-                  <td class="table-desc">수도권 프리미엄 친환경 봉안당(납골당) 입점 및 안치 시 특별 제휴 할인가 적용</td>
+                  <td class="table-desc">수도권 프리미엄 친환경 제휴 추모시설 이용 시 특별 제휴 할인가 적용</td>
                 </tr>
               </tbody>
             </table>
@@ -1371,7 +1429,8 @@
           
           <h4 style="font-size: 16px; font-weight: 700; color: var(--color-dark); margin-bottom: 12px;">제2조 (용어의 정의)</h4>
           <p style="margin-bottom: 20px;">1. "회원"이란 회사에 개인정보를 제공하여 회원 등록을 하고 회사가 제공하는 멤버십 서비스를 이용하는 고객을 말합니다.<br>
-          2. "멤버십 서비스"란 회사가 회원에게 제공하는 여행, 웨딩, 크루즈, 숙박, 전용 쇼핑몰 혜택 등을 아우르는 라이프스타일 케어 서비스를 통칭합니다.</p>
+          2. "멤버십 서비스"란 회사가 회원에게 제공하는 여행, 웨딩, 크루즈, 숙박, 전용 쇼핑몰 혜택 등을 아우르는 라이프스타일 케어 서비스를 통칭합니다.<br>
+          3. 본 서비스는 프리미엄 멤버십 구독 서비스이며, 선불식 할부거래 상품이 아닙니다.</p>
           
           <h4 style="font-size: 16px; font-weight: 700; color: var(--color-dark); margin-bottom: 12px;">제3조 (약관의 효력 및 변경)</h4>
           <p style="margin-bottom: 20px;">1. 본 약관은 서비스 화면에 게시하거나 기타의 방법으로 회원에게 공시함으로써 효력이 발생합니다.<br>
@@ -1478,6 +1537,93 @@
         </label>
         <button class="promo-close-btn" id="closePromoModalBtn">닫기</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Authentication Modal (Login / Register) -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-container auth-modal-container">
+      <button class="modal-close" id="closeAuthModal" aria-label="닫기">&times;</button>
+      <div class="auth-modal-header text-center">
+        <span class="modal-subtitle">MEMBERSHIP ACCESS</span>
+        <h3 class="modal-title" id="authModalTitle">HDONE 멤버십 로그인</h3>
+        <p class="auth-modal-desc" id="authModalDesc">로그인 후 모든 라이프 혜택과 멤버십 서비스를 이용하실 수 있습니다.</p>
+      </div>
+
+      <!-- Auth Tabs -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn active" id="tabLoginBtn" data-tab="login">로그인</button>
+        <button type="button" class="auth-tab-btn" id="tabRegisterBtn" data-tab="register">회원가입</button>
+      </div>
+
+      <!-- Login Panel -->
+      <div class="auth-panel active" id="authPanelLogin">
+        <form id="loginForm" class="auth-form" autocomplete="on">
+          <div class="form-group">
+            <label for="loginEmail">이메일 계정</label>
+            <input type="email" id="loginEmail" name="loginEmail" placeholder="이메일 주소를 입력하세요 (ex. user@example.com)" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">비밀번호</label>
+            <input type="password" id="loginPassword" name="loginPassword" placeholder="비밀번호를 입력하세요" required autocomplete="current-password">
+          </div>
+          <div class="auth-actions">
+            <button type="submit" class="btn btn-gold-filled btn-full" id="submitLoginBtn">로그인</button>
+          </div>
+          <div class="auth-switch-prompt">
+            <span>아직 HDONE 회원이 아니신가요?</span>
+            <button type="button" class="switch-to-register-btn" id="switchToRegisterBtn">회원가입하기</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Register Panel -->
+      <div class="auth-panel" id="authPanelRegister">
+        <form id="registerForm" class="auth-form" autocomplete="on">
+          <div class="form-group">
+            <label for="regName">이름</label>
+            <input type="text" id="regName" name="regName" placeholder="성함을 입력하세요" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="regEmail">이메일 계정</label>
+            <input type="email" id="regEmail" name="regEmail" placeholder="이메일 주소를 입력하세요" required autocomplete="email">
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label for="regPassword">비밀번호</label>
+              <input type="password" id="regPassword" name="regPassword" placeholder="비밀번호 (6자 이상)" required autocomplete="new-password">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label for="regPasswordConfirm">비밀번호 확인</label>
+              <input type="password" id="regPasswordConfirm" name="regPasswordConfirm" placeholder="비밀번호 재입력" required autocomplete="new-password">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regPhone">전화번호 (휴대폰/일반전화/대표번호)</label>
+            <input type="tel" id="regPhone" name="regPhone" placeholder="숫자만 입력 시 자동 하이픈 (ex. 010-0000-0000)" required inputmode="numeric" pattern="[0-9]*" maxlength="14" autocomplete="tel">
+          </div>
+          
+          <!-- Address Search Field -->
+          <div class="form-group">
+            <label for="regAddress">주소</label>
+            <div class="address-input-group">
+              <input type="text" id="regZipcode" name="regZipcode" placeholder="우편번호" readonly style="width: 120px;">
+              <button type="button" class="btn btn-outline-dark" id="btnSearchAddress" style="padding: 10px 18px; font-size: 13px;">주소 검색</button>
+            </div>
+            <input type="text" id="regAddress" name="regAddress" placeholder="기본 주소 (검색 시 자동 입력)" readonly style="margin-top: 8px;">
+            <input type="text" id="regDetailAddress" name="regDetailAddress" placeholder="상세주소를 입력하세요 (동/호수 등)" style="margin-top: 8px;">
+          </div>
+
+          <div class="auth-actions">
+            <button type="submit" class="btn btn-gold-filled btn-full" id="submitRegisterBtn">회원가입 완료</button>
+          </div>
+          <div class="auth-switch-prompt">
+            <span>이미 계정이 있으신가요?</span>
+            <button type="button" class="switch-to-login-btn" id="switchToLoginBtn">로그인하기</button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 

@@ -235,13 +235,18 @@ h1, h2, h3, h4 {
   display: flex;
   list-style: none;
   gap: 30px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-link {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   color: var(--color-text-light-muted);
+  text-decoration: none;
+  transition: var(--transition-normal);
 }
 
 .nav-link:hover {
@@ -259,7 +264,7 @@ h1, h2, h3, h4 {
 .header-cta {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .header-phone-link {
@@ -316,6 +321,12 @@ h1, h2, h3, h4 {
   color: #000;
   border: 1px solid var(--color-gold);
   font-weight: 600;
+  padding: 8px 18px;
+  font-size: 13px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .site-header .btn-dark-filled:hover {
@@ -3574,6 +3585,358 @@ h1, h2, h3, h4 {
   accent-color: var(--color-gold);
   cursor: pointer;
   margin: 0;
+}
+
+/* ==========================================
+ * Member Authentication & Page Lock Styles
+ * ========================================== */
+
+/* Header Auth & User Badge */
+.header-auth-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.user-greeting {
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFF;
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #CBD5E1;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFF;
+  border-color: #FFF;
+}
+
+.btn-header-login {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #D4AF37;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn-header-login svg {
+  color: #D4AF37;
+  transition: transform 0.2s ease;
+}
+
+.btn-header-login:hover {
+  background: #D4AF37;
+  color: #0B0E14;
+  border-color: #D4AF37;
+}
+
+.btn-header-login:hover svg {
+  color: #0B0E14;
+}
+
+.site-header.scrolled .btn-header-login {
+  border-color: rgba(0, 0, 0, 0.25);
+  color: var(--color-dark);
+  background: transparent;
+}
+
+.site-header.scrolled .btn-header-login svg {
+  color: var(--color-dark);
+}
+
+.site-header.scrolled .btn-header-login:hover {
+  background: var(--color-dark);
+  color: #FFF;
+  border-color: var(--color-dark);
+}
+
+.site-header.scrolled .btn-header-login:hover svg {
+  color: #FFF;
+}
+
+/* Mobile Auth item - 반드시 데스크톱에서는 숨기고 모바일 메뉴 안에서만 표시 */
+.mobile-auth-item {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-auth-item {
+    display: block !important;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+.mobile-user-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 8px;
+  color: #FFF;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Member Lock Banner */
+.member-lock-banner {
+  background: linear-gradient(180deg, #0A0A0B 0%, #111827 50%, #0A0A0B 100%);
+  padding: 60px 20px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  position: relative;
+  z-index: 20;
+}
+
+.member-lock-container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.lock-card {
+  background: rgba(18, 24, 38, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 45px 35px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+}
+
+.lock-icon-wrap {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px auto;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lock-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  color: #D4AF37;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.lock-heading {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFF;
+  margin-bottom: 14px;
+}
+
+.lock-subtext {
+  font-size: 15px;
+  color: #94A3B8;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.lock-subtext strong {
+  color: #D4AF37;
+}
+
+.lock-btn-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Guest vs Member states */
+body.is-guest .member-lock-banner {
+  display: block;
+}
+
+body.is-guest .protected-content-wrapper {
+  position: relative;
+  max-height: 480px;
+  overflow: hidden;
+  filter: blur(8px);
+  opacity: 0.3;
+  pointer-events: none;
+  user-select: none;
+}
+
+body.is-guest .protected-content-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(10, 10, 11, 0.95) 100%);
+  pointer-events: auto;
+}
+
+body.is-member .member-lock-banner {
+  display: none !important;
+}
+
+body.is-member .protected-content-wrapper {
+  filter: none !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Auth Modal Styles */
+.auth-modal-container {
+  max-width: 480px;
+  padding: 40px 35px 35px;
+  background: #FFFFFF;
+}
+
+.auth-modal-header {
+  margin-bottom: 25px;
+}
+
+.auth-modal-desc {
+  font-size: 13.5px;
+  color: var(--color-text-secondary);
+  margin-top: 6px;
+}
+
+.auth-tabs {
+  display: flex;
+  border-bottom: 2px solid #E2E8F0;
+  margin-bottom: 25px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.auth-tab-btn.active {
+  color: var(--color-gold);
+  border-bottom-color: var(--color-gold);
+}
+
+.auth-panel {
+  display: none;
+}
+
+.auth-panel.active {
+  display: block;
+  animation: modalTabFadeIn 0.3s ease;
+}
+
+.auth-form .form-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.auth-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 6px;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="tel"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #0F172A;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.auth-form input:focus {
+  border-color: var(--color-gold);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.address-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.address-input-group input {
+  flex: 1;
+}
+
+.address-input-group button {
+  white-space: nowrap;
+}
+
+.auth-actions {
+  margin-top: 24px;
+}
+
+.auth-switch-prompt {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.auth-switch-prompt button {
+  background: none;
+  border: none;
+  color: var(--color-gold);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 13px;
+  font-family: inherit;
 }
 
 

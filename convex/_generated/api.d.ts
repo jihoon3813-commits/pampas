@@ -11,6 +11,7 @@
 import type * as consultations from "../consultations.js";
 import type * as http from "../http.js";
 import type * as inquiries from "../inquiries.js";
+import type * as users from "../users.js";
 
 import type {
   ApiFromModules,
@@ -22,6 +23,7 @@ declare const fullApi: ApiFromModules<{
   consultations: typeof consultations;
   http: typeof http;
   inquiries: typeof inquiries;
+  users: typeof users;
 }>;
 
 /**

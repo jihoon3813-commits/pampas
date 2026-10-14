@@ -158,6 +158,80 @@ http.route({
   }),
 });
 
+// 3. User Authentication
+http.route({
+  path: "/register",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    try {
+      const data = await request.json();
+      const result = await ctx.runMutation(api.users.register, {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        phone: data.phone,
+        zipcode: data.zipcode,
+        address: data.address,
+        detailAddress: data.detailAddress,
+      });
+      return new Response(JSON.stringify(result), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    } catch (e: any) {
+      return new Response(JSON.stringify({ success: false, message: e.message || "회원가입 처리 중 오류가 발생했습니다." }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  }),
+});
+
+http.route({
+  path: "/login",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    try {
+      const data = await request.json();
+      const result = await ctx.runMutation(api.users.login, {
+        email: data.email,
+        password: data.password,
+      });
+      return new Response(JSON.stringify(result), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    } catch (e: any) {
+      return new Response(JSON.stringify({ success: false, message: e.message || "로그인 처리 중 오류가 발생했습니다." }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  }),
+});
+
+http.route({
+  path: "/getMe",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    try {
+      const data = await request.json();
+      const user = await ctx.runQuery(api.users.getMe, {
+        email: data.email,
+      });
+      return new Response(JSON.stringify({ success: !!user, user }), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    } catch (e: any) {
+      return new Response(JSON.stringify({ success: false, message: e.message || "회원정보 조회 실패" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  }),
+});
+
 // CORS Preflight Options
 http.route({ path: "/submitConsultation", method: "OPTIONS", handler: handleOptions });
 http.route({ path: "/getConsultations", method: "OPTIONS", handler: handleOptions });
@@ -170,5 +244,9 @@ http.route({ path: "/getInquiries", method: "OPTIONS", handler: handleOptions })
 http.route({ path: "/updateInquiryStatus", method: "OPTIONS", handler: handleOptions });
 http.route({ path: "/deleteInquiry", method: "OPTIONS", handler: handleOptions });
 http.route({ path: "/clearAllInquiries", method: "OPTIONS", handler: handleOptions });
+
+http.route({ path: "/register", method: "OPTIONS", handler: handleOptions });
+http.route({ path: "/login", method: "OPTIONS", handler: handleOptions });
+http.route({ path: "/getMe", method: "OPTIONS", handler: handleOptions });
 
 export default http;
