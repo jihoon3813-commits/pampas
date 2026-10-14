@@ -5,14 +5,15 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Convex Endpoints (Primary & Fallback)
+  // Convex Endpoints (Primary Production & Dev Fallback)
   const CONVEX_SITE_URLS = [
-    'https://modest-gnat-340.convex.site',
-    'https://unique-panda-155.convex.site'
+    'https://unique-panda-155.convex.site',
+    'https://modest-gnat-340.convex.site'
   ];
 
   const postToConvex = async (endpoint, body) => {
     let lastError = null;
+    let lastData = null;
     for (const baseUrl of CONVEX_SITE_URLS) {
       try {
         const res = await fetch(`${baseUrl}${endpoint}`, {
@@ -24,12 +25,27 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify(body)
         });
         const data = await res.json();
-        return data;
+        if (data && data.success) {
+          if (endpoint === '/register') {
+            for (const otherUrl of CONVEX_SITE_URLS) {
+              if (otherUrl !== baseUrl) {
+                fetch(`${otherUrl}/register`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(body)
+                }).catch(() => {});
+              }
+            }
+          }
+          return data;
+        }
+        lastData = data;
       } catch (err) {
         console.warn(`Fetch notice for ${baseUrl}${endpoint}:`, err);
         lastError = err;
       }
     }
+    if (lastData) return lastData;
     throw lastError || new Error('서버 연결 실패');
   };
 
