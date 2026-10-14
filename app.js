@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!input) return;
     input.setAttribute('type', 'tel');
     input.setAttribute('inputmode', 'numeric');
-    input.setAttribute('pattern', '[0-9]*');
+    input.removeAttribute('pattern');
     input.setAttribute('maxlength', '14');
     input.addEventListener('input', (e) => {
       e.target.value = formatPhoneNumber(e.target.value);
