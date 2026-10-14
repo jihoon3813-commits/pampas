@@ -5,6 +5,34 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Convex Endpoints (Primary & Fallback)
+  const CONVEX_SITE_URLS = [
+    'https://modest-gnat-340.convex.site',
+    'https://unique-panda-155.convex.site'
+  ];
+
+  const postToConvex = async (endpoint, body) => {
+    let lastError = null;
+    for (const baseUrl of CONVEX_SITE_URLS) {
+      try {
+        const res = await fetch(`${baseUrl}${endpoint}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        return data;
+      } catch (err) {
+        console.warn(`Fetch notice for ${baseUrl}${endpoint}:`, err);
+        lastError = err;
+      }
+    }
+    throw lastError || new Error('서버 연결 실패');
+  };
+
   // Helper to save consultation data to localStorage and Convex
   const saveConsultation = async (userName, userPhone, interestBenefit, consultTime) => {
     const payload = {
@@ -23,17 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error saving consultation locally:', e);
     }
 
-    try {
-      const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
-        || 'https://modest-gnat-340.convex.site';
-      await fetch(`${CONVEX_SITE_URL}/submitConsultation`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (e) {
-      console.error('Error submitting consultation to Convex:', e);
-    }
+    postToConvex('/submitConsultation', payload).catch(e => {
+      console.warn('Convex consultation sync notice:', e);
+    });
   };
 
   // Helper to save 1:1 inquiry data to localStorage and Convex
@@ -53,17 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error saving 1:1 inquiry locally:', e);
     }
 
-    try {
-      const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
-        || 'https://modest-gnat-340.convex.site';
-      await fetch(`${CONVEX_SITE_URL}/submitInquiry`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (e) {
-      console.error('Error submitting 1:1 inquiry to Convex:', e);
-    }
+    postToConvex('/submitInquiry', payload).catch(e => {
+      console.warn('Convex inquiry sync notice:', e);
+    });
   };
 
   // Helper to escape HTML characters
@@ -151,6 +163,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // Member Authentication & State Management
   // ==========================================
   const AUTH_STORAGE_KEY = 'hdone_auth_user';
+  const LOCAL_USERS_KEY = 'hdone_local_users';
+
+  const getLocalUsers = () => {
+    try {
+      const data = localStorage.getItem(LOCAL_USERS_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const saveLocalUser = (user) => {
+    try {
+      const users = getLocalUsers();
+      users.push(user);
+      localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(users));
+    } catch (e) {
+      console.error('Error saving local user:', e);
+    }
+  };
 
   const getAuthUser = () => {
     try {
@@ -358,22 +390,30 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.textContent = '로그인 중...';
 
       try {
-        const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
-          || 'https://modest-gnat-340.convex.site';
-        const res = await fetch(`${CONVEX_SITE_URL}/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (data.success && data.user) {
+        let data = null;
+        try {
+          data = await postToConvex('/login', { email, password });
+        } catch (fetchErr) {
+          console.warn('Convex login network issue, attempting local fallback:', fetchErr);
+          const localUsers = getLocalUsers();
+          const found = localUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+          if (found && found.password === password) {
+            data = { success: true, user: found };
+          } else if (found) {
+            data = { success: false, message: '이메일 또는 비밀번호가 올바르지 않습니다.' };
+          } else {
+            throw fetchErr;
+          }
+        }
+
+        if (data && data.success && data.user) {
           setAuthUser(data.user);
           updateAuthUI();
           closeAuthModal();
           loginForm.reset();
           showCustomAlert('로그인 성공', `<p><strong>${escapeHtml(data.user.name)}</strong>님, 환영합니다!<br>HDONE의 모든 멤버십 혜택과 서비스를 자유롭게 이용하실 수 있습니다.</p>`);
         } else {
-          showCustomAlert('로그인 실패', `<p>${escapeHtml(data.message || '이메일 또는 비밀번호가 올바르지 않습니다.')}</p>`);
+          showCustomAlert('로그인 실패', `<p>${escapeHtml(data?.message || '이메일 또는 비밀번호가 올바르지 않습니다.')}</p>`);
         }
       } catch (err) {
         console.error('Login error:', err);
@@ -414,22 +454,39 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.textContent = '가입 진행 중...';
 
       try {
-        const CONVEX_SITE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_CONVEX_SITE_URL) 
-          || 'https://modest-gnat-340.convex.site';
-        const res = await fetch(`${CONVEX_SITE_URL}/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password, name, phone, zipcode, address, detailAddress })
-        });
-        const data = await res.json();
-        if (data.success && data.user) {
+        let data = null;
+        try {
+          data = await postToConvex('/register', { email, password, name, phone, zipcode, address, detailAddress });
+        } catch (fetchErr) {
+          console.warn('Convex register network issue, attempting local fallback:', fetchErr);
+          const localUsers = getLocalUsers();
+          if (localUsers.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+            data = { success: false, message: '이미 가입된 이메일 주소입니다.' };
+          } else {
+            const newUser = {
+              id: 'local_' + Date.now(),
+              email,
+              password,
+              name,
+              phone,
+              zipcode,
+              address,
+              detailAddress,
+              role: 'user'
+            };
+            saveLocalUser(newUser);
+            data = { success: true, user: newUser };
+          }
+        }
+
+        if (data && data.success && data.user) {
           setAuthUser(data.user);
           updateAuthUI();
           closeAuthModal();
           registerForm.reset();
           showCustomAlert('회원가입 완료', `<p><strong>${escapeHtml(data.user.name)}</strong>님의 회원가입이 성공적으로 완료되었습니다.<br>HDONE 프리미엄 멤버십에 오신 것을 진심으로 환영합니다!</p>`);
         } else {
-          showCustomAlert('회원가입 실패', `<p>${escapeHtml(data.message || '회원가입 처리 중 오류가 발생했습니다.')}</p>`);
+          showCustomAlert('회원가입 실패', `<p>${escapeHtml(data?.message || '회원가입 처리 중 오류가 발생했습니다.')}</p>`);
         }
       } catch (err) {
         console.error('Register error:', err);

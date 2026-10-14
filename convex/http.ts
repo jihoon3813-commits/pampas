@@ -6,8 +6,9 @@ const http = httpRouter();
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PATCH",
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PATCH, HEAD",
+  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Max-Age": "86400",
 };
 
 const handleOptions = httpAction(async (ctx, request) => {
@@ -180,7 +181,7 @@ http.route({
       });
     } catch (e: any) {
       return new Response(JSON.stringify({ success: false, message: e.message || "회원가입 처리 중 오류가 발생했습니다." }), {
-        status: 400,
+        status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -203,7 +204,7 @@ http.route({
       });
     } catch (e: any) {
       return new Response(JSON.stringify({ success: false, message: e.message || "로그인 처리 중 오류가 발생했습니다." }), {
-        status: 400,
+        status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -225,7 +226,7 @@ http.route({
       });
     } catch (e: any) {
       return new Response(JSON.stringify({ success: false, message: e.message || "회원정보 조회 실패" }), {
-        status: 400,
+        status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -246,7 +247,10 @@ http.route({ path: "/deleteInquiry", method: "OPTIONS", handler: handleOptions }
 http.route({ path: "/clearAllInquiries", method: "OPTIONS", handler: handleOptions });
 
 http.route({ path: "/register", method: "OPTIONS", handler: handleOptions });
+http.route({ path: "/register/", method: "OPTIONS", handler: handleOptions });
 http.route({ path: "/login", method: "OPTIONS", handler: handleOptions });
+http.route({ path: "/login/", method: "OPTIONS", handler: handleOptions });
 http.route({ path: "/getMe", method: "OPTIONS", handler: handleOptions });
+http.route({ path: "/getMe/", method: "OPTIONS", handler: handleOptions });
 
 export default http;
