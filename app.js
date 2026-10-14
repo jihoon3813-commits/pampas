@@ -297,9 +297,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeAuthModalBtn) {
     closeAuthModalBtn.addEventListener('click', closeAuthModal);
   }
+  // 로그인 모달 외부 배경을 클릭해도 모달이 닫히지 않도록 처리
   if (authModal) {
     authModal.addEventListener('click', (e) => {
-      if (e.target === authModal) closeAuthModal();
+      if (e.target === authModal) {
+        e.stopPropagation();
+      }
     });
   }
   if (tabLoginBtn) tabLoginBtn.addEventListener('click', () => switchAuthTab('login'));
