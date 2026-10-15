@@ -3836,6 +3836,11 @@ body.is-guest .member-lock-banner {
   display: block;
 }
 
+/* 비로그인 상태에서는 다양한 혜택 섹션의 바로가기 버튼 숨김 */
+body.is-guest .benefits-alt-section .panel-btn {
+  display: none !important;
+}
+
 body.is-guest .protected-content-wrapper {
   position: relative;
   max-height: 480px;
