@@ -395,6 +395,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Quick Fill Guest Login Button
+  const quickGuestFillBtn = document.getElementById('quickGuestFillBtn');
+  if (quickGuestFillBtn) {
+    quickGuestFillBtn.addEventListener('click', () => {
+      const emailInput = document.getElementById('loginEmail');
+      const passwordInput = document.getElementById('loginPassword');
+      if (emailInput && passwordInput) {
+        emailInput.value = 'guest';
+        passwordInput.value = '1111';
+        passwordInput.focus();
+      }
+    });
+  }
+
   // Handle Login Form Submit
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
@@ -418,11 +432,40 @@ document.addEventListener('DOMContentLoaded', () => {
           const found = localUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
           if (found && found.password === password) {
             data = { success: true, user: found };
+          } else if (email.toLowerCase() === 'guest' && password === '1111') {
+            data = {
+              success: true,
+              user: {
+                id: 'guest_default',
+                email: 'guest',
+                name: '게스트',
+                phone: '010-0000-0000',
+                address: '서울특별시 강남구',
+                detailAddress: 'HDONE 갤러리 게스트룸',
+                role: 'user'
+              }
+            };
           } else if (found) {
-            data = { success: false, message: '이메일 또는 비밀번호가 올바르지 않습니다.' };
+            data = { success: false, message: '아이디 또는 비밀번호가 올바르지 않습니다.' };
           } else {
             throw fetchErr;
           }
+        }
+
+        // If server returned failure but it's the predefined guest account
+        if ((!data || !data.success) && email.toLowerCase() === 'guest' && password === '1111') {
+          data = {
+            success: true,
+            user: {
+              id: 'guest_default',
+              email: 'guest',
+              name: '게스트',
+              phone: '010-0000-0000',
+              address: '서울특별시 강남구',
+              detailAddress: 'HDONE 갤러리 게스트룸',
+              role: 'user'
+            }
+          };
         }
 
         if (data && data.success && data.user) {
@@ -432,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
           loginForm.reset();
           showCustomAlert('로그인 성공', `<p><strong>${escapeHtml(data.user.name)}</strong>님, 환영합니다!<br>HDONE의 모든 멤버십 혜택과 서비스를 자유롭게 이용하실 수 있습니다.</p>`);
         } else {
-          showCustomAlert('로그인 실패', `<p>${escapeHtml(data?.message || '이메일 또는 비밀번호가 올바르지 않습니다.')}</p>`);
+          showCustomAlert('로그인 실패', `<p>${escapeHtml(data?.message || '아이디 또는 비밀번호가 올바르지 않습니다.')}</p>`);
         }
       } catch (err) {
         console.error('Login error:', err);
@@ -552,6 +595,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Close mobile menu and verify authentication before entering menus
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      // Benefits and Announcement sections are publicly viewable
+      if (href === '#benefits' || href === '#announcement' || href === '#hero') {
+        if (navMenu) navMenu.classList.remove('open');
+        if (menuToggle) menuToggle.classList.remove('open');
+        return;
+      }
+
       if (!isLoggedIn()) {
         e.preventDefault();
         e.stopPropagation();
@@ -856,6 +907,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroActionBtns = document.querySelectorAll('#hero .hero-actions a');
   heroActionBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
+      const href = btn.getAttribute('href');
+      if (href === '#benefits' || href === '#announcement') {
+        return; // Allow viewing public sections
+      }
       if (!isLoggedIn()) {
         e.preventDefault();
         openAuthModal('login', '로그인 후 HDONE 멤버십 서비스를 이용하실 수 있습니다.');
